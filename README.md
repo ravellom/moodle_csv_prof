@@ -1,6 +1,6 @@
-     <h1> Moodle Offline Analytics</h1>
-    <h2>Analíticas de aprendizaje a partir de informes de un curso en Moodle</h2>
-     <p>Este proyecto está en desarrollo y abierto a colaboración</p>
+## Offline Moodle Analytics
+#Analíticas de aprendizaje a partir de informes de un curso en Moodle
+Este proyecto está en desarrollo y abierto a colaboración
    
     <h2>Donde descargar los CSV </h2>
     
