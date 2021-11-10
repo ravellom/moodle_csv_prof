@@ -23,8 +23,10 @@
       {% if result_present %}
       <button type="button" class="btn btn-sm btn-link">
         <a href="{% url 'data_analysis' %}?new_df=True">Eliminar Datos</a></button>
-        <p><b>Rango de fecha de los datos:</b> {{ date_s }} - {{ date_f }}</p>
-        <p><b>Cantidad de accesos:</b> {{ c_acc }}</p>
+        <p><h5>Rango de fecha de los datos:<br> 
+          <span class="badge bg-success">{{ date_s }}</span> - 
+          <span class="badge bg-success">{{ date_f }}</span></h5>
+        <p><h5>Cantidad de accesos: <span class="badge bg-success"> {{ c_acc }}</span></h5>
       {% endif %}
       
     </div></p>

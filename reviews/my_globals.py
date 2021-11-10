@@ -5,7 +5,8 @@ import pandas as pd
 
 # Global vars
 DF = pd.DataFrame
-DFF = DF
+DFF = pd.DataFrame
+
 DATE_S = pd.to_datetime("01-01-2021")
 DATE_F = pd.to_datetime("01-01-2021")
 BASE_TAMPLATE = 'plotly_white'

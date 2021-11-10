@@ -6,23 +6,22 @@ from plotly.offline import plot
 
 from . import my_globals
 
-def plot_general_1(df, date_s, date_f):
+def plot_general_1(df):
     dfg2 = df['date'].value_counts().reset_index().rename(
             columns={'index': 'Date', 'date':'N'} ).sort_values('Date')
-    fig = px.line(dfg2[(dfg2['Date'] >= date_s) & (dfg2['Date'] <= date_f)], x="Date", y="N", template='plotly_white')
+    fig = px.line(dfg2, x="Date", y="N", template='plotly_white')
     fig.update_layout({ "xaxis": {  "title":"Fecha", 
                                     'type': 'date'},
                         "yaxis": {  "title":"Accesos"}
                         })
-    access_mean = dfg2[(dfg2['Date'] >= date_s) & (dfg2['Date'] <= date_f)].N.mean()
+    access_mean = dfg2.N.mean()
     fig.add_hline(y = access_mean, line_color = "red", line_width = 1, line_dash='dash')
     fig.update_layout(height=300)
     fig.update_layout(my_globals.BASE_LAYOUT)
     plot_div = plot(fig, output_type="div")#, config={"displayModeBar": False})
     return plot_div
 
-def plot_general_heatmap(df, date_s, date_f):
-    df = df[(df['date'] >= date_s) & (df['date'] <= date_f)]
+def plot_general_heatmap(df):
     dfg5 = df[["wd","hour"]].value_counts().reset_index().rename(columns={0:'N'})
     data = go.Heatmap(
         z = dfg5['N'],
