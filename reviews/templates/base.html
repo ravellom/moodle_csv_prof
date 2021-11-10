@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link  href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+
+    
+
+    <title>Report app | {% block title %}{% endblock title %}</title>
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+
+        {% block content %}
+        {% endblock content %}
+
+
+  <!-- jquery -->
+  <script src="{% static 'jquery-3.6.0.min.js' %}" ></script>
+  <script src="{% static 'popper.min.js' %}" ></script> 
+  <!-- Bootstrap js -->
+  <script src="{% static 'bootstrap.min.js'  %}"></script>
+  <script src="{% static 'bootstrap.bundle.min.js'  %}"></script>
+
+  <!--  Flatpickr  -->
+<script src="{% static 'flatpickr.min.4.6.9.js' %}" ></script>
+<script>
+  $("#basicDate").flatpickr({
+      dateFormat: "Y-m-d"
+  });
+  $("#basicDate2").flatpickr({
+      dateFormat: "Y-m-d"
+  });
+  
+  </script>
+  </body>
+</html>

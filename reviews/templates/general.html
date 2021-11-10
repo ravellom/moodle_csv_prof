@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<script src="{% static 'plotly-latest.min.js' %}" ></script>
+<div class="container body-content">
+  <p>
+<div class="card shadow">
+  <div class="card-body">
+  <h2>Análisis generales</h2>
+  <p>Basados en accesos de los participantes. Incluye estudiantes y profesores</p>
+</div>
+</div>
+</p>
+  {% if result_present %}
+  <div class="row">
+
+    <div class="col-sm-6">
+      <div class="container body-content shadow">
+      <p><strong>Accesos diarios:</strong></p>
+      <p>{{ div1|safe }}</p>
+    </div> 
+  </div> 
+
+    <div class="col-sm-6">
+      <div class="container body-content shadow">
+        <p><strong>Accesos por día de la semana:</strong></p>
+        {{ div2|safe }}
+      </div>
+    </div>
+
+  </div>
+    {% else %}
+    <div class="alert alert-danger shadow" role="alert">
+      <strong>Atención!</strong> No ha subido ningún reporte!
+    </div>
+  {% endif %}
+
+{% endblock %}
