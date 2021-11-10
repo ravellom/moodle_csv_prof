@@ -1,15 +1,15 @@
-## Offline Moodle Analytics
-# Analíticas de aprendizaje a partir de informes de un curso en Moodle
+# Offline Moodle Analytics
+### Analíticas de aprendizaje a partir de informes de un curso en Moodle
 Este proyecto está en desarrollo y abierto a colaboración
    
-# Donde descargar los CSV
+## Donde descargar los CSV
     
 En la página principal del curso en Moodle, vaya al menú
 que aparece en la rueda dentada y siga la ruta &quot;Aún más/Informes/Registros&quot;,
 luego haga clic en &quot;Conseguir estos registros&quot; y descarguelos como CSV.
 Este fichero .csv lo puede subir en este sitio para su análisis.</p>
 
-# Objetivo
+## Objetivo
     
 El objetivo de este proyecto es crear algoritmos,
 aplicaciones Web y otros servicios en Python para analizar informes de Moodle
