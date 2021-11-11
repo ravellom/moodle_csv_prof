@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-<script src="{% static 'plotly-latest.min.js' %}" ></script>
+
 <div class="container body-content">
   <p>
 <div class="card shadow">
@@ -31,10 +31,11 @@
     </div>
 
   </div>
+  <script src="{% static 'plotly-latest.min.js' %}" ></script>
     {% else %}
     <div class="alert alert-danger shadow" role="alert">
       <strong>Atención!</strong> No ha subido ningún reporte!
     </div>
   {% endif %}
-
+ 
 {% endblock %}

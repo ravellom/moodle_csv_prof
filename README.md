@@ -24,3 +24,6 @@ Se aceptan sugerencias y colaboración para su desarrollo
 Dr. Raidell Avello Martínez, Profesor Titular, Dpto. de Tecnología Educativa e Informática.
 Coordinador del Grupo de Investigación sobre Tecnologías EMergentes para el Aprendizaje (GITEM@) https://gitema.ucf.edu.cu/
 Universidad de Cienfuegos, Cuba.
+### Colaboradores:</h4>
+Lic. Marcos Carrera Ramos
+Licenciado en Ciencia de la Computación. Profesor Adiestrado en la Universidad de Cienfuegos, Cuba.

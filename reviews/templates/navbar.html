@@ -2,12 +2,12 @@
 
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #e3f2fd;">
-  <a class="navbar-brand" href="/">Moodle Offline Analytics</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid"><a class="navbar-brand" href="/"> Moodle Offline Analytics</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" href="{% url 'data_analysis' %}">Datos</a>
@@ -22,10 +22,11 @@
         <a class="nav-link" href="{% url 'act_analysis' %}">Actividades</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Ayuda</a>
+        <a class="nav-link" href="{% url 'help' %}">Ayuda</a>
       </li>
     </ul>
   </div>
+</div>
 </nav>
 
 

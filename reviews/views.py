@@ -23,6 +23,9 @@ my_globals.DFF = pd.DataFrame
 def index(request):
     return render(request, 'index.html')
 
+def help(request):
+    return render(request, 'help.html')
+
 #### Cargar datos   -------------------------------
 
 def data_analysis(request):

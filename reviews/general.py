@@ -4,17 +4,16 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.offline import plot
 
-from . import my_globals
+from . import my_globals, data
 
 def plot_general_1(df):
-    dfg2 = df['date'].value_counts().reset_index().rename(
-            columns={'index': 'Date', 'date':'N'} ).sort_values('Date')
-    fig = px.line(dfg2, x="Date", y="N", template='plotly_white')
+    course_total_access = data.get_course_total_access(df)
+    fig = px.line(course_total_access, x="Date", y="N", template='plotly_white')
     fig.update_layout({ "xaxis": {  "title":"Fecha", 
                                     'type': 'date'},
                         "yaxis": {  "title":"Accesos"}
                         })
-    access_mean = dfg2.N.mean()
+    access_mean = course_total_access.N.mean()
     fig.add_hline(y = access_mean, line_color = "red", line_width = 1, line_dash='dash')
     fig.update_layout(height=300)
     fig.update_layout(my_globals.BASE_LAYOUT)
@@ -22,16 +21,16 @@ def plot_general_1(df):
     return plot_div
 
 def plot_general_heatmap(df):
-    dfg5 = df[["wd","hour"]].value_counts().reset_index().rename(columns={0:'N'})
-    data = go.Heatmap(
-        z = dfg5['N'],
-        x = dfg5['hour'],
-        y = dfg5['wd'], # zmin=-1, # zmax=1,
+    course_headmap = data.get_course_headmap(df)
+    trace1 = go.Heatmap(
+        z = course_headmap['N'],
+        x = course_headmap['hour'],
+        y = course_headmap['wd'], # zmin=-1, # zmax=1,
         xgap = 1, # Sets the horizontal gap (in pixels) between bricks
         ygap = 1,
         colorscale = 'blues' #'RdBu'
     )
-    fig = go.Figure(data=data)
+    fig = go.Figure(data=trace1)
     fig.update_layout(height=300)
     fig.update_layout(my_globals.BASE_LAYOUT)
     fig.update_layout(  yaxis=dict( ticktext = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],

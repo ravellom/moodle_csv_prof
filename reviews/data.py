@@ -34,3 +34,12 @@ def descom_fecha(df):
     # Weekday
     df['wd'] = df['date'].map(lambda x: x.weekday())
     return df
+
+def get_course_total_access(df):
+    df2 = df['date'].value_counts().reset_index().rename(
+            columns={'index': 'Date', 'date':'N'} ).sort_values('Date')
+    return df2
+
+def get_course_headmap(df):
+    df2 = df[["wd","hour"]].value_counts().reset_index().rename(columns={0:'N'})
+    return df2
