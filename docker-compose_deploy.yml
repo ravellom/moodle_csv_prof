@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  app:
+    ports:
+      - 29000:29000
+    environment:
+    - DEPLOY=1
+  
+  server:
+    build: ./server
+    restart: always
+    volumes:
+      - static-data:/static
+    ports:
+      - 443:443
+      - 80:80
+    depends_on:
+      - app
+
+volumes:
+  static-data:

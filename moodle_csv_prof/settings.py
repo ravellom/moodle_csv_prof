@@ -11,33 +11,21 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import os
+from os import environ
 
 ## Para Heroku
 import django_heroku 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-#print(BASE_DIR)
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$%pxl+=tbam9qcg8vw(bxzu=u^(m)k2rn_s61^)lmgxc0y8y-r'
+SECRET_KEY = environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-# Para usar del env en Heroku
-DEBUG = os.environ.get('DEBUG', True)
+DEBUG = bool(int(environ.get("DEBUG", 0)))
 
-#ALLOWED_HOSTS = []
-
-if DEBUG:
-    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
-else:
-    ALLOWED_HOSTS = ['https://moodle-py.herokuapp.com/'] # Ver con Marcos si agregar la UCf aquí
+ALLOWED_HOSTS = environ.get("ALLOWED_HOSTS", "").split(",")[1:]
 
 # Application definition
 
@@ -130,7 +118,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
