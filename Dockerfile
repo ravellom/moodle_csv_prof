@@ -1,8 +1,8 @@
-FROM python:3.8-alpine
+FROM python:3.9-alpine
 
 # Install build dependencies
 RUN apk update
-RUN apk add --no-cache --virtual .tmp make automake gcc g++ subversion python3-dev linux-headers
+RUN apk add --no-cache --virtual .tmp make automake gcc g++ subversion python3-dev postgresql-dev linux-headers
 
 WORKDIR /app
 
