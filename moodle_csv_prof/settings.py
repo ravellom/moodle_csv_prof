@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from os import environ
 
+## Para Heroku
+import django_heroku 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,6 +27,10 @@ DEBUG = bool(int(environ.get("DEBUG", 0)))
 
 ALLOWED_HOSTS = environ.get("ALLOWED_HOSTS", "").split(",")[1:]
 
+if DEBUG:
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+else:
+    ALLOWED_HOSTS = ['https://moodle-py.herokuapp.com/'] # Ver con Marcos si agregar la UCf aquí
 
 # Application definition
 
@@ -122,3 +129,8 @@ STATIC_ROOT = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#print(STATIC_ROOT)
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
