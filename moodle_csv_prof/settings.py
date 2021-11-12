@@ -28,10 +28,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$%pxl+=tbam9qcg8vw(bxzu=u^(m)k2rn_s61^)lmgxc0y8y-r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+# Para usar del env en Heroku
+DEBUG = os.environ.get('DEBUG', True)
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
+if DEBUG:
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+else:
+    ALLOWED_HOSTS = ['https://moodle-py.herokuapp.com/'] # Ver con Marcos si agregar la UCf aquí
 
 # Application definition
 
