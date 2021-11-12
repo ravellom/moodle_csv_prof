@@ -27,11 +27,6 @@ DEBUG = bool(int(environ.get("DEBUG", 0)))
 
 ALLOWED_HOSTS = environ.get("ALLOWED_HOSTS", "").split(",")[1:]
 
-if DEBUG:
-    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
-else:
-    ALLOWED_HOSTS = ['https://moodle-py.herokuapp.com/'] # Ver con Marcos si agregar la UCf aquí
-
 # Application definition
 
 INSTALLED_APPS = [
