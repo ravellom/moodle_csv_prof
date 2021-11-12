@@ -1,5 +1,6 @@
 import pandas as pd
 from . import my_globals
+from django.conf import settings
 
 def data_upload(file):
     df = pd.read_csv(file)
@@ -43,3 +44,30 @@ def get_course_total_access(df):
 def get_course_headmap(df):
     df2 = df[["wd","hour"]].value_counts().reset_index().rename(columns={0:'N'})
     return df2
+
+def get_country_count_IP(df):
+    import os
+    import IP2Location
+
+    database = IP2Location.IP2Location(os.path.join(settings.BASE_DIR, 'IP-COUNTRY.BIN'))
+    df_ip = df['IP'].value_counts().reset_index().rename(
+            #columns={'index': 'IP', 'Dirección IP':'N'})
+            columns={'index': 'IP', 'IP':'N'})
+
+    def find_country_from_ip(ip):
+        rec = database.get_all(ip)
+        return rec.country_long
+    
+    df_ip['Country'] = df_ip.apply(lambda x: find_country_from_ip(x['IP']), axis=1)
+    df_ip2 = df_ip['Country'].value_counts().reset_index().rename(
+            columns={'index': 'Country', 'Country':'N'})
+     
+    countries_codes_and_coordinates = pd.read_csv(os.path.join(settings.BASE_DIR, 'countries_codes_and_coordinates.csv'))
+    countries_codes_and_coordinates3 = countries_codes_and_coordinates[['Country','Alpha-3 code']]
+    
+    df_ip2 = df_ip2.merge(countries_codes_and_coordinates3, how='left', on='Country')
+    df_ip2['ISO'] =  df_ip2['Alpha-3 code'].str.replace('"','')
+    df_ip2['ISO'] =  df_ip2['ISO'].str.replace(' ','')
+    df_ip2 = df_ip2.dropna()
+    
+    return df_ip2

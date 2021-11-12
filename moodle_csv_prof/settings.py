@@ -20,10 +20,11 @@ import django_heroku
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = environ['SECRET_KEY']
+#SECRET_KEY = environ['SECRET_KEY']
+SECRET_KEY = environ.get("SECRET_KEY", "18x&q4kb9oa!qz-7wg(nk#0%w-=49$ylj1gtn1n6^e0pe@@8ge")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(environ.get("DEBUG", 0)))
+DEBUG = bool(int(environ.get("DEBUG", 1)))
 
 ALLOWED_HOSTS = environ.get("ALLOWED_HOSTS", "").split(",")[1:]
 
