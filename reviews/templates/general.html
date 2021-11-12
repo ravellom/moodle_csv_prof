@@ -31,6 +31,10 @@
     </div>
 
   </div>
+  <div class="container body-content shadow">
+    <p><strong>Accesos por países:</strong></p>
+    {{ div3|safe }}
+  </div>
   <script src="{% static 'plotly-latest.min.js' %}" ></script>
     {% else %}
     <div class="alert alert-danger shadow" role="alert">

@@ -12,3 +12,4 @@ plotly==5.3.1
 uwsgi>=2.0<=2.1
 django-heroku==0.3.1
 gunicorn==20.0.4
+IP2Location==8.6.2

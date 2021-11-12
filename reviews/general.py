@@ -42,3 +42,16 @@ def plot_general_heatmap(df):
                         
     plot_div = plot(fig, output_type="div", config={'responsive':True})#, config={"displayModeBar": False})
     return plot_div
+
+def plot_country_count_IP(df):
+    country_count_IP = data.get_country_count_IP(df)
+
+    fig = px.choropleth(country_count_IP, locations="ISO",
+                    color="N", # lifeExp is a column of gapminder
+                    hover_name="Country", # column to add to hover information
+                    color_continuous_scale=px.colors.sequential.Plasma)
+    fig.update_layout(height=300)
+    fig.update_layout(my_globals.BASE_LAYOUT)
+    plot_div = plot(fig, output_type="div")
+    return plot_div
+    

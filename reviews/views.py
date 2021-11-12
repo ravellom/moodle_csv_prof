@@ -72,11 +72,12 @@ def general_analysis(request):
     if my_globals.DF.empty == False:
         div1 = general.plot_general_1(my_globals.DFF)
         div2 = general.plot_general_heatmap(my_globals.DFF)
+        div3 = general.plot_country_count_IP(my_globals.DFF)
         return render(request, 'general.html',
                       {'result_present': True,
                        'div1': div1,
-                       'div2': div2})
-        ## hacer algo
+                       'div2': div2,
+                       'div3': div3})
     return render(request,'general.html', {'result_present': False})
 
 #####  Análisis de participantes  -------------------------------
