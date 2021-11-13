@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'reviews'
+    'reviews',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +126,11 @@ STATIC_ROOT = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+## Auth
+LOGIN_URL = '/login'
+
 
 #print(STATIC_ROOT)
 

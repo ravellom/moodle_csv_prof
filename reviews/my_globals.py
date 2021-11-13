@@ -2,8 +2,14 @@
 ### Variables globales del sistema
 
 import pandas as pd
+from dataclasses import dataclass
 
-# Global vars
+#Globals dataframes
+# @dataclass
+# class DFInfo:
+#     DF = pd.DataFrame
+#     DFF = pd.DataFrame
+
 DF = pd.DataFrame
 DFF = pd.DataFrame
 

@@ -24,9 +24,19 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'help' %}">Ayuda</a>
       </li>
+      {% if request.user.is_authenticated %}
+      <div class="container-fluid">
+          <li class="nav-item">
+            <a class="nav-link btn btn-sm bg-primary" href="{% url 'logout' %}">Cerrar sesión - {{ user.first_name }} {{user.last_name }} ({{ user.username }})</a>
+          </li>
+        </div>
+      {% endif %}
     </ul>
   </div>
 </div>
+
+
+
 </nav>
 
 
