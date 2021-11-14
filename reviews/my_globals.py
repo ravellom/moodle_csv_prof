@@ -10,8 +10,8 @@ from dataclasses import dataclass
 #     DF = pd.DataFrame
 #     DFF = pd.DataFrame
 
-DF = pd.DataFrame
-DFF = pd.DataFrame
+# DataFrames Collection
+DfC = {}
 
 DATE_S = pd.to_datetime("01-01-2021")
 DATE_F = pd.to_datetime("01-01-2021")
