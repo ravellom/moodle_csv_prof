@@ -49,6 +49,7 @@ def login_view(request):
     return render(request, 'auth/login.html', context)
 ####### END login infrastructure  -------------- 
 
+### Home ---------------
 def index(request):
     error_message = None
     form = AuthenticationForm()

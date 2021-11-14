@@ -2,7 +2,7 @@
 
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0a4275;">
   <div class="container-fluid"><a class="navbar-brand" href="/"> Moodle Offline Analytics</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -24,12 +24,16 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'help' %}">Ayuda</a>
       </li>
+    </ul>
       {% if request.user.is_authenticated %}
-      <div class="container-fluid">
-          <li class="nav-item">
-            <a class="nav-link btn btn-sm bg-primary" href="{% url 'logout' %}">Cerrar sesión - {{ user.first_name }} {{user.last_name }} ({{ user.username }})</a>
-          </li>
-        </div>
+      <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'help' %}">{{ user.username }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-outline-light btn-rounded" href="{% url 'logout' %}" role="button">Cerrar sesión</a>
+        </li>
+      </div>
       {% endif %}
     </ul>
   </div>
