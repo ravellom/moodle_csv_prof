@@ -28,8 +28,10 @@ DEBUG = bool(int(environ.get("DEBUG", 1)))
 
 ALLOWED_HOSTS = environ.get("ALLOWED_HOSTS", "").split(",")[1:]
 
-# Application definition
+# Acitvar translations
+USE_I18N = True
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'moodle_csv_prof.urls'
