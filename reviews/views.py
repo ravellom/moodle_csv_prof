@@ -12,12 +12,10 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import messages
 
-#import csv
-import pandas as pd
-
 # My libs
-from . import my_globals
-from . import data, general, participants, activities 
+import pandas as pd
+from . import data, general, participants, activities, my_globals
+from .forms import NewUserForm
 
 ####### login infrastructure  -------------- 
 def logout_view(request):
@@ -47,6 +45,19 @@ def login_view(request):
         'error_message': error_message
     }
     return render(request, 'auth/login.html', context)
+
+def register(request):
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful." )
+            return redirect("index")
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+    form = NewUserForm()
+    return render (request=request, template_name="auth/register.html", context={"register_form":form})
+
 ####### END login infrastructure  -------------- 
 
 ### Home ---------------
@@ -80,50 +91,69 @@ def help(request):
 #### Cargar datos   -------------------------------
 @login_required
 def data_analysis(request):
+    # Construir nombres de los dataframes
     df_name =  request.session.session_key + "_df"
     dff_name = request.session.session_key + "_dff"
-    if df_name in my_globals.DfC.keys():
+    new_df = bool(request.GET.get("new_df", False))
+
+    if new_df:
+        my_globals.DfC[df_name] = my_globals.DfC[df_name].iloc[0:0]
+        my_globals.DfC[dff_name] = my_globals.DfC[dff_name].iloc[0:0]
+        return render(request, 'data_analysis.html',
+            {'result_present': False})
+
+    # "Si" está creado el df
+    if df_name in my_globals.DfC.keys(): 
         df = my_globals.DfC[df_name]
         dff = my_globals.DfC[dff_name]
-    try:
-        new_df = bool(request.GET.get("new_df", False))
-        if new_df:
-            my_globals.DfC[df_name] = my_globals.DfC[df_name].iloc[0:0]
-            my_globals.DfC[dff_name] = my_globals.DfC[dff_name].iloc[0:0]
-            return redirect('data_analysis') #render(request, 'data_analysis.html')
-        if df_name not in my_globals.DfC.keys():
-            if request.method == 'POST' and request.FILES['myfile']:
-                myfile = request.FILES['myfile']
-                try:
-                    my_globals.DfC[df_name] = data.data_upload(myfile)
-                    my_globals.DfC[dff_name] = my_globals.DfC[df_name]
-                except Exception:
-                    messages.error(request,"Algo pasó!")
-                df = my_globals.DfC[df_name]    
-                df2 = df.head(10)
-                df2_html = df2.to_html(classes="table table-striped", border=0)
-                return render(request, 'data_analysis.html',
-                    {'result_present': True,
-                    'df': df2_html,
-                    'date_s': my_globals.DATE_S,
-                    'date_f': my_globals.DATE_F,
-                    'c_acc' : df.shape[0]})
-        elif df_name in my_globals.DfC.keys():
-            if "date_s" in request.POST and "date_f" in request.POST: ## Filtrar
-                    my_globals.DATE_S = request.POST['date_s']
-                    my_globals.DATE_F = request.POST['date_f']
-                    my_globals.DfC[dff_name] = df[df_name][(df['datefull'] > my_globals.DATE_S) & (df['datefull'] < my_globals.DATE_F)]
-                    dff = my_globals.DfC[dff_name]
+        if "date_s" in request.POST and "date_f" in request.POST: ## Filtrar
+            # Capturar fechas en POST y guardarlas en session
+            request.session['date_s'] = request.POST['date_s']
+            request.session['date_f'] = request.POST['date_f']
+            date_s= request.session['date_s']
+            date_f= request.session['date_f']
+            dff = df[ (df['datefull'] > pd.to_datetime(date_s)) & (df['datefull'] < pd.to_datetime(date_f)) ]
+            my_globals.DfC[dff_name] = dff
+            #dff = my_globals.DfC[dff_name]
             df2 = dff.head(10)
             df2_html = df2.to_html(classes="table table-striped table-sm", border=0)
             return render(request, 'data_analysis.html',
                 {'result_present': True,
                     'df': df2_html,                    
-                    'date_s': my_globals.DATE_S,
-                    'date_f': my_globals.DATE_F,
+                    'date_s': request.session['date_s'],
+                    'date_f': request.session['date_f'],
                     'c_acc' : dff.shape[0]})
-    except Exception:
-        messages.error(request,"No ha seleccionado fichero!")
+        df2 = dff.head(10)
+        df2_html = df2.to_html(classes="table table-striped table-sm", border=0)
+        return render(request, 'data_analysis.html',
+            {'result_present': True,
+                'df': df2_html,                    
+                'date_s': request.session['date_s'],
+                'date_f': request.session['date_f'],
+                'c_acc' : dff.shape[0]})
+
+    # No está creado el df
+    if df_name not in my_globals.DfC.keys(): 
+        if request.method == 'POST' and request.FILES['myfile']:
+            myfile = request.FILES['myfile']
+            try:
+                my_globals.DfC[df_name] = data.data_upload(myfile)
+                my_globals.DfC[dff_name] = my_globals.DfC[df_name]
+            except Exception:
+                messages.error(request,"Algo pasó!")
+            df = my_globals.DfC[df_name]  
+            request.session['date_s'] = df["date"].min().strftime('%Y-%m-%d') 
+            request.session['date_f'] = df["date"].max().strftime('%Y-%m-%d')   
+            df2 = df.head(10)
+            df2_html = df2.to_html(classes="table table-striped", border=0)
+            return render(request, 'data_analysis.html',
+                {'result_present': True,
+                'df': df2_html,
+                'date_s': request.session['date_s'],
+                'date_f': request.session['date_f'],
+                'c_acc' : df.shape[0]})
+    # except Exception:
+    #     messages.error(request,"No ha seleccionado fichero!")
     return render(request, 'data_analysis.html')
 
 ##### Análisis General   -------------------------------

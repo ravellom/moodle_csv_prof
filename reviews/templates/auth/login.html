@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
-{% load crispy_forms_tags %} 
+{% load crispy_forms_tags %}
 
 {% block title %}
 login
@@ -10,30 +10,29 @@ login
 {% block content %}
 
 {% if error_message %}
-    <div class="alert alert-danger" role="alert">
-        {{error_message}}
-    </div>
-{% endif %}
-<div class="container body-content">
-    <p>
-<div class="card shadow">
-    <div class="card-body">
-    <div class="row">
-        <div class="col-6">
-            <form action="" method="POST" class="p-3 border border-2">
-                {% csrf_token %}
-                {{form|crispy}}
-                <button type="submit" class="btn btn-primary mt-3">Iniciar sesión</button>
-            </form>
-        </div>
-        <div class="col-6">
-            Noticias
-            <br>
-            Actualizaciones
-        </div>
-
-    </div>
+<div class="alert alert-danger" role="alert">
+    {{error_message}}
 </div>
+{% endif %}
+<p>
+<div class="container body-content">
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <form action="" method="POST" class="p-3 border border-2">
+                        {% csrf_token %}
+                        {{form|crispy}}
+                        <button type="submit" class="btn btn-primary mt-3">Iniciar sesión</button>
+                    </form>
+                </div>
+                <div class="col-6">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 </p>
 

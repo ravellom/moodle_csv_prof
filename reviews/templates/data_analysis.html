@@ -4,77 +4,95 @@
 
 {% block content %}
 <!--  Flatpicker Styles  -->
-<link  href="{% static 'flatpickr.min.css' %}" rel="stylesheet">
+<link href="{% static 'flatpickr.min.css' %}" rel="stylesheet">
 
-<div class="container theme-showcase" role="main">
-  <div class="row">
-  <div class="col-sm-6">
-  <div class="card shadow">
-    <div class="card-body">
-      <h2>Subir datos</h2>
-    <form method="post" enctype="multipart/form-data" >
-      <p><div class="form-group">
-      <input type="file" name="myfile" class="form-control-file" >
-    </div></p>
-      {% csrf_token %}
-      <p>
-      <div class="form-group">
-      <button type="submit" class="btn btn-sm btn-primary">Subir reporte</button>
-      {% if result_present %}
-      <button type="button" class="btn btn-sm btn-link">
-        <a href="{% url 'data_analysis' %}?new_df=True">Eliminar Datos</a></button>
-        <p><h5>Rango de fecha de los datos:<br> 
-          <span class="badge bg-success">{{ date_s }}</span> - 
-          <span class="badge bg-success">{{ date_f }}</span></h5>
-        <p><h5>Cantidad de accesos: <span class="badge bg-success"> {{ c_acc }}</span></h5>
-      {% endif %}
-      
-    </div></p>
-    </form>
-  </div>
-</div>
-</div>
-<div class="col-sm-6">
-
-  <div class="card shadow">
-    <div class="card-body">
-      <h2>Filtrar</h2>
-    <form method="post" enctype="multipart/form-data" >
-      <p><div class="form-group">
-      
-      <p>Fecha inicio: <input type="text" name="date_s" id="basicDate" placeholder="Seleccione una fecha" data-input></p>
-      <p>Fecha final: <input type="text" name="date_f"  id="basicDate2" placeholder="Seleccione una fecha" data-input></p>
-    </div></p>
-
-    {% csrf_token %}
-      <p>
-      <div class="form-group">
-      <button type="submit" class="btn btn-sm btn-primary">Filtrar</button>
-    </div></p>
-    </form>
-  </div>
-</div>
-
-</div>
-
-</div>
-  {% if result_present %}
-  <p>
 <div class="container body-content">
-      <p><strong>10 primeros registros de los datos subidos:</strong></p>
-      <div class="table-responsive">
-        {{ df|safe }}
-      </div>
-</div>
-</p>
-  {% endif %}
 
-{% for message in messages %}
-<div class="container body-content"></div>
-    <div class="alert alert-danger shadow" role="alert">
-        {{ message | safe }}
+  <div class="row">
+
+    <div class="col-sm-6">
+    <p>
+      <div class="card shadow">
+        <div class="card-body">
+          <h2>Subir datos</h2>
+          <form method="post" enctype="multipart/form-data">
+            <p>
+            <div class="form-group">
+              <input type="file" name="myfile" class="form-control-file">
+            </div>
+            </p>
+            {% csrf_token %}
+            <p>
+            <div class="form-group">
+              <button type="submit" class="btn btn-sm btn-primary">Subir reporte</button>
+              {% if result_present %}
+              <button type="button" class="btn btn-sm btn-link">
+                <a href="{% url 'data_analysis' %}?new_df=True">Eliminar Datos</a></button>
+              <p>
+              <h5>Rango de fecha de los datos:<br>
+                <span class="badge bg-success">{{ date_s }}</span> -
+                <span class="badge bg-success">{{ date_f }}</span>
+              </h5>
+              <p>
+              <h5>Cantidad de accesos: <span class="badge bg-success"> {{ c_acc }}</span></h5>
+              {% endif %}
+
+            </div>
+            </p>
+          </form>
+        </div>
+      </div>
+    </p>
+    </div>
+    {% if result_present %}
+    <div class="col-sm-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2>Filtrar</h2>
+          <form method="post" enctype="multipart/form-data">
+            <p>
+            <div class="form-group">
+
+              <p>Fecha inicio: <input type="text" name="date_s" id="basicDate" placeholder="Seleccione una fecha"
+                  data-input></p>
+              <p>Fecha final: <input type="text" name="date_f" id="basicDate2" placeholder="Seleccione una fecha"
+                  data-input></p>
+            </div>
+            </p>
+
+            {% csrf_token %}
+            <p>
+            <div class="form-group">
+              <button type="submit" class="btn btn-sm btn-primary">Filtrar</button>
+            </div>
+            </p>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
+</div>
+
+{% endif %}
+
+{% if result_present %}
+<p>
+<div class="container body-content">
+  <p><strong>10 primeros registros de los datos subidos:</strong></p>
+  <div class="table-responsive">
+    {{ df|safe }}
+  </div>
+</div>
+
+</p>
+{% endif %}
+
+{% for message in messages %}
+<div class="container body-content">
+<div class="alert alert-danger shadow" role="alert">
+  {{ message | safe }}
+</div>
+</div>
 {% endfor %}
 
 

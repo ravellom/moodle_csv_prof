@@ -18,8 +18,6 @@ def data_upload(file):
     df = df.loc[df["Name"] != "-"]
     df = df.loc[df["Name"] != "Gestor General Cursos a Distancia"]
     df = descom_fecha(df)
-    my_globals.DATE_S = df["date"].min().strftime('%Y-%m-%d') #, format="%Y-%m-%d", dayfirst=True)
-    my_globals.DATE_F = df["date"].max().strftime('%Y-%m-%d') #, format="%Y-%m-%d", dayfirst=True)
     return df
 
 def descom_fecha(df):

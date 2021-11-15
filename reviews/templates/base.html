@@ -1,24 +1,26 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="/static/images/favicon.ico" />
 
-    <!-- Bootstrap CSS -->
-    <link  href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/static/images/favicon.ico" />
 
-    
+  <!-- Bootstrap CSS -->
+  <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
 
-    <title>Report app | {% block title %}{% endblock title %}</title>
-  </head>
-  <body>
-    {% include 'navbar.html' %}
 
-        {% block content %}
-        {% endblock content %}
+
+  <title>Report app | {% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+  {% include 'navbar.html' %}
+
+  {% block content %}
+  {% endblock content %}
 
   <!-- Footer -->
   <footer class="text-center text-white" style="background-color: #0a4275;">
@@ -28,9 +30,8 @@
       <section class="">
         <p class="d-flex justify-content-center align-items-center">
           <span class="me-3">Regístrate gratis!</span>
-          <button type="button" class="btn btn-outline-light btn-rounded">
-            Regístrate!
-          </button>
+          <a class="btn btn-outline-light btn-rounded" href="{% url 'register' %}" role="button">
+            Regístrate!</a>
         </p>
       </section>
       <!-- Section: CTA -->
@@ -48,22 +49,23 @@
 
 
   <!-- jquery -->
-  <script src="{% static 'jquery-3.6.0.min.js' %}" ></script>
-  <script src="{% static 'popper.min.js' %}" ></script> 
+  <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static 'popper.min.js' %}"></script>
   <!-- Bootstrap js -->
   <script src="{% static 'bootstrap.min.js'  %}"></script>
   <script src="{% static 'bootstrap.bundle.min.js'  %}"></script>
 
   <!--  Flatpickr  -->
-<script src="{% static 'flatpickr.min.4.6.9.js' %}" ></script>
-<script>
-  $("#basicDate").flatpickr({
+  <script src="{% static 'flatpickr.min.4.6.9.js' %}"></script>
+  <script>
+    $("#basicDate").flatpickr({
       dateFormat: "Y-m-d"
-  });
-  $("#basicDate2").flatpickr({
+    });
+    $("#basicDate2").flatpickr({
       dateFormat: "Y-m-d"
-  });
-  
+    });
+
   </script>
-  </body>
+</body>
+
 </html>
