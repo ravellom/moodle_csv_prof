@@ -6,41 +6,41 @@
 
 <div class="container body-content">
   <p>
-<div class="card shadow">
-  <div class="card-body">
-  <h2>Análisis de participantes</h2>
-  <p>Incluye estudiantes y profesores</p>
-</div>
-</div>
-</p>
+  <div class="card shadow">
+    <div class="card-body">
+      <h2>Análisis de participantes</h2>
+      <p>Incluye estudiantes y profesores</p>
+    </div>
+  </div>
+  </p>
   {% if result_present %}
   <div class="row">
-  <div class="col-sm-6">
-    <div class="container body-content shadow">
-          <p><strong>Cantidad de participantes: {{ cant_part }}</strong></p>
-          <p><strong>Lista de usuarios con cantidad de accesos:</strong></p>
-          <div class="table-responsive">
-            {{ df|safe }}
-          </div>
-    </div>
-  </div> 
-
-  <div class="col-sm-6">
-    <div class="container body-content shadow">
-      <p><strong>Cantidad de participantes por actividad:</strong></p>
-      <p>{{ div1|safe }}</p>
-    </div>  
-   </div>
-  
-</div>
-</div>
-
-    {% else %}
-    <div class="alert alert-danger" role="alert">
-      <strong>Atención!</strong> No ha subido ningún reporte!
+    <div class="col-sm-6">
+      <div class="container body-content shadow">
+        <p><strong>Cantidad de participantes: {{ cant_part }}</strong></p>
+        <p><strong>Lista de usuarios con cantidad de accesos:</strong></p>
+        <div class="table-responsive">
+          {{ df|safe }}
+        </div>
+      </div>
     </div>
 
-  {% endif %}
+    <div class="col-sm-6">
+      <div class="container body-content shadow">
+        <p><strong>Cantidad de participantes por actividad:</strong></p>
+        <p>{{ div1|safe }}</p>
+      </div>
+    </div>
 
-  <script src="{% static 'plotly-latest.min.js' %}" ></script>
+  </div>
+</div>
+<script src="{% static 'plotly-latest.min.js' %}"></script>
+{% else %}
+<div class="alert alert-danger" role="alert">
+  <strong>Atención!</strong> No ha subido ningún reporte!
+</div>
+
+{% endif %}
+
+
 {% endblock %}

@@ -14,27 +14,39 @@
 </div>
 </p>
   {% if result_present %}
-  <div class="row">
-
-    <div class="col-sm-6">
-      <div class="container body-content shadow">
-      <p><strong>Accesos diarios:</strong></p>
-      <p>{{ div1|safe }}</p>
-    </div> 
+  <p>
+  <div class="row"> 
+  <div class="col-sm-8 h-100">
+  <div class="card shadow">
+    <div class="card-body">
+      <strong>Accesos diarios:</strong>
+      {{ div1|safe }}
+    </div>
+  </div>
   </div> 
 
-    <div class="col-sm-6">
-      <div class="container body-content shadow">
-        <p><strong>Accesos por día de la semana:</strong></p>
+    <div class="col-sm-4 h-100" >
+      <div class="card shadow">
+        <div class="card-body">
+        <strong>Accesos por día de la semana:</strong>
         {{ div2|safe }}
       </div>
+      </div>
     </div>
-
   </div>
-  <div class="container body-content shadow">
+  </p>
+
+  <div class="card shadow">
+    <div class="card-body">
     <p><strong>Accesos por países:</strong></p>
     {{ div3|safe }}
   </div>
+
+</div>
+</div>
+</p>
+<p></p>
+<p></p>
   <script src="{% static 'plotly-latest.min.js' %}" ></script>
     {% else %}
     <div class="alert alert-danger shadow" role="alert">

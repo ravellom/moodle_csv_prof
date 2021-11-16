@@ -2,10 +2,16 @@
 ### Variables globales del sistema
 
 import pandas as pd
+from dataclasses import dataclass
 
-# Global vars
-DF = pd.DataFrame
-DFF = pd.DataFrame
+#Globals dataframes
+# @dataclass
+# class DFInfo:
+#     DF = pd.DataFrame
+#     DFF = pd.DataFrame
+
+# DataFrames Collection
+DfC = {}
 
 DATE_S = pd.to_datetime("01-01-2021")
 DATE_F = pd.to_datetime("01-01-2021")

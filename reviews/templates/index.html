@@ -1,25 +1,44 @@
 {% extends 'base.html' %}
 
 {% load static %}
-
+{% load crispy_forms_tags %} 
 {% block content %}
 
 <div class="container container-md">
-  <div class="card shadow"> 
+  <div class="row">
+  <div class="col-9">
+   <div class="card shadow"> 
     <div class="card-body">
      <!-- <h1> Moodle Offline Analytics</h1>
     <h2>Analíticas de aprendizaje a partir de informes de un curso en Moodle</h2> -->
     <img src="/static/images/moodle-csv.png" class="img-fluid rounded mx-auto d-block" alt="Offline Moodle Analytics">
-    
+      </div>
+    </div>
+  </div>
+  {% if not request.user.is_authenticated %}
+    <div class="col-3">
+      <div class="card shadow"> 
+        <form action="" method="POST" class="p-3 border border-2">
+          {% csrf_token %}
+          {{form|crispy}}
+          <button type="submit" class="btn btn-primary mt-3">Iniciar sesión</button>
+      </form>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  </div>
+  <div class="container container-md">
+    <div class="card shadow"> 
+      <div class="card-body">
      <p>Este proyecto está en desarrollo y abierto a colaboración</p>
    
     <h2>Donde descargar los CSV </h2>
     
     <p>En la página principal del curso en Moodle, vaya al menú
     que aparece en la rueda dentada y siga la ruta &quot;Aún más/Informes/Registros&quot;,
-    luego haga clic en &quot;Conseguir estos registros&quot; y descarguelos como CSV.</p>
-    
-    <p>Este fichero .csv lo puede subir en este sitio para su análisis.</p>
+    luego haga clic en &quot;Conseguir estos registros&quot; y descarguelos como CSV. Este fichero .csv lo puede subir en este sitio para su análisis. Más detalles en la <a href="{% url 'help' %}">ayuda.</a>
+  </p>
     
     <h2>Objetivo</h2>
     
@@ -49,5 +68,6 @@
   </div>
 </div>
 </div>
+
 
 {% endblock %}
