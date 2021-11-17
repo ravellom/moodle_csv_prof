@@ -3,9 +3,31 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.offline import plot
-
 from . import my_globals
 
+######  K-means analysis
+from sklearn.cluster import KMeans
+from sklearn import preprocessing
+from sklearn.decomposition import PCA
+
+def kmeans_func(df):
+        # Creating our Model
+        kmeans = KMeans(n_clusters = 3)
+        # Training our model
+        DF_NORM  = preprocessing.normalize(df) # Normalizing the data
+        kmeans.fit(DF_NORM)
+        # You can see the labels (clusters) assigned for each data point with the function labels_
+        kmeans.labels_
+        # Assigning the labels to the initial dataset
+        df['cluster'] = kmeans.labels_
+
+        # Reducing data dimensions 
+        PCA_ = PCA(n_components = 2).fit(df)
+
+        # Applying the PCA
+        PCA_2 = PCA_.transform(df)
+
+        return PCA_2
 
 def plot_act_acc(df):
         df_comp = df['Component'].value_counts().reset_index().rename(
