@@ -21,10 +21,12 @@ from .forms import NewUserForm
 def logout_view(request):
     df_name =  request.session.session_key + "_df"
     dff_name = request.session.session_key + "_dff"
-    my_globals.DfC.pop(df_name)
-    my_globals.DfC.pop(dff_name)
+    if df_name in my_globals.DfC.keys(): 
+        my_globals.DfC.pop(df_name)
+        my_globals.DfC.pop(dff_name)
     logout(request)
     return redirect('login')
+    
 
 def login_view(request):
     error_message = None
