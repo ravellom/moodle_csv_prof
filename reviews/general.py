@@ -51,7 +51,6 @@ def plot_general_heatmap(df):
 
 def plot_country_count_IP(df):
     country_count_IP = data.get_country_count_IP(df)
-
     fig = px.choropleth(country_count_IP, locations="ISO",
                     color="N", # lifeExp is a column of gapminder
                     hover_name="Country", # column to add to hover information
@@ -61,3 +60,31 @@ def plot_country_count_IP(df):
     plot_div = plot(fig, output_type="div")
     return plot_div
     
+def plot_act_acc(df):
+        df_comp = data.get_comp_acc(df)
+        fig = px.pie(df_comp.head(8), values='N', names='Component',
+                     hover_data=['Component'], labels={'N':'accesos'})
+        fig.update_traces(textposition='inside', textinfo='percent+label')
+        #fig = px.bar(df_comp, y="Component", x='N')
+        fig.update_layout(my_globals.BASE_LAYOUT)
+        # fig.update_layout({     "xaxis": {  "title":"Accesos" },
+        #                         "yaxis": {  "title":"Tipos de Actividades"}
+        #                         })
+        plot_div = plot(fig, output_type="div")
+        return plot_div
+
+def plot_act_acc2(df):
+        df3 = data.get_act_acc(df)
+        start, stop, step = 0, 43, 1
+        df3["Context_br"] = df3.Context.str.slice(start, stop, step)
+        df3['Context_br'] = df3.Context_br + "..."
+        df3['Context_br'] = df3.Context_br.str.wrap(30)
+        df3['Context_br'] = df3.Context_br.apply(lambda x: x.replace('\n', '<br>'))
+        fig = px.bar(df3.head(10), y="Context_br", x='N')
+        fig.update_layout(my_globals.BASE_LAYOUT)    
+        fig.update_layout({     "xaxis": {  "title":"Accesos" },
+                                "yaxis": {  "title":"Actividades"}
+                                })
+        plot_div = plot(fig, output_type="div")
+        return plot_div
+

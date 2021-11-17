@@ -39,9 +39,36 @@ def get_course_total_access(df):
             columns={'index': 'Date', 'date':'N'} ).sort_values('Date')
     return df2
 
+def get_part_access(df):
+    df_usr_t1 = df['Name'].value_counts().reset_index().rename(columns={'index': 'Usuario', 'Name':'Accesos'})
+    return df_usr_t1
+
+def merge_part_df(df):
+    user_acc = get_part_access(df)
+
+    return df
+    
 def get_course_headmap(df):
     df2 = df[["wd","hour"]].value_counts().reset_index().rename(columns={0:'N'})
     return df2
+
+def get_comp_acc(df):
+    df_comp = df['Component'].value_counts().reset_index().rename(
+                   columns={'index': 'Component', 'Component':'N'})
+    return df_comp
+
+def get_user_list(df):
+    users = sorted(df.Name.unique())
+    return users
+
+def get_act_acc(df):
+    #df2 = df[df.Component.isin(["Foro", "Tarea", "Glosario","Cuestionario", "URL"])]
+    df2 = df[df.Context.str.startswith(("Foro","Tarea","Glosario","Cuestionario", "URL"))]     
+    df3 = ( df2[['Context']]
+            .value_counts()
+            .reset_index() 
+            .rename(columns={'index': 'Context', 0:'N'}).sort_values(by='N') )
+    return df3
 
 def get_country_count_IP(df):
     import os

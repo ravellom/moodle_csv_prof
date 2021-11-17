@@ -33,6 +33,25 @@
     </div>
 
   </div>
+
+  <p>
+  <div class="card shadow">
+    <div class="card-body">
+      <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          Dropdown link
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          {% for user in users_list %}
+          <li><a class="dropdown-item" href="#">{{ user }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  </p>
+
 </div>
 <script src="{% static 'plotly-latest.min.js' %}"></script>
 {% else %}

@@ -27,7 +27,7 @@ urlpatterns = [
     path('data_analysis/', reviews.views.data_analysis, name='data_analysis'),
     path('general/', reviews.views.general_analysis, name='general_analysis'),
     path('participants/', reviews.views.part_analysis, name='part_analysis'),
-    path('activities/', reviews.views.act_analysis, name='act_analysis'),
+    path('cluster/', reviews.views.act_analysis, name='cluster'),
     path('help/', reviews.views.help, name='help')
    #url('data_analysis/', views.data_analysis, name='data_analysis'),
 ]

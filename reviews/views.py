@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-#from django.http import HttpResponse
+from django.http import HttpResponse
 
 # Para auttenticación
 from django.contrib.auth import authenticate, login, logout
@@ -14,11 +14,15 @@ from django.contrib import messages
 
 # My libs
 import pandas as pd
-from . import data, general, participants, activities, my_globals
+from . import data, general, participants, cluster, my_globals
 from .forms import NewUserForm
 
 ####### login infrastructure  -------------- 
 def logout_view(request):
+    df_name =  request.session.session_key + "_df"
+    dff_name = request.session.session_key + "_dff"
+    my_globals.DfC.pop(df_name)
+    my_globals.DfC.pop(dff_name)
     logout(request)
     return redirect('login')
 
@@ -96,11 +100,11 @@ def data_analysis(request):
     dff_name = request.session.session_key + "_dff"
     new_df = bool(request.GET.get("new_df", False))
 
+    # Si pinchó en eliminar datos
     if new_df:
-        my_globals.DfC[df_name] = my_globals.DfC[df_name].iloc[0:0]
-        my_globals.DfC[dff_name] = my_globals.DfC[dff_name].iloc[0:0]
-        return render(request, 'data_analysis.html',
-            {'result_present': False})
+        my_globals.DfC.pop(df_name)
+        my_globals.DfC.pop(dff_name)
+        return redirect('data_analysis')
 
     # "Si" está creado el df
     if df_name in my_globals.DfC.keys(): 
@@ -156,19 +160,21 @@ def data_analysis(request):
     #     messages.error(request,"No ha seleccionado fichero!")
     return render(request, 'data_analysis.html')
 
-##### Análisis General   -------------------------------
+##### Análisis General basado en accesos  -------------------------------
 @login_required
 def general_analysis(request):
     dff_name = request.session.session_key + "_dff"
     if dff_name in my_globals.DfC.keys():
         div1 = general.plot_general_1(my_globals.DfC[dff_name])
         div2 = general.plot_general_heatmap(my_globals.DfC[dff_name])
-        div3 = general.plot_country_count_IP(my_globals.DfC[dff_name])
+        div3 = general.plot_act_acc(my_globals.DfC[dff_name])
+        div4 = general.plot_act_acc2(my_globals.DfC[dff_name])
+        div5 = general.plot_country_count_IP(my_globals.DfC[dff_name])
         return render(request, 'general.html',
                       {'result_present': True,
-                       'div1': div1,
-                       'div2': div2,
-                       'div3': div3})
+                       'div1': div1, 'div2': div2,
+                       'div3': div3, 'div4': div4,
+                       'div5': div5})
     return render(request,'general.html', {'result_present': False})
 
 #####  Análisis de participantes  -------------------------------
@@ -178,8 +184,9 @@ def part_analysis(request):
     if dff_name in my_globals.DfC.keys():
         ### Gráfico de cantidad de participantes por actividad
         div1 = participants.plot_part_act2(my_globals.DfC[dff_name])
-        ### Agrupar usuarios
-        df_usr_t1 = my_globals.DfC[dff_name]['Name'].value_counts().reset_index().rename(columns={'index': 'Usuario', 'Name':'Accesos'})
+        ### Agrupar usuariosmy_g
+        df_usr_t1 = data.get_part_access(my_globals.DfC[dff_name])
+        users_list = data.get_user_list(my_globals.DfC[dff_name])
         cant_part = df_usr_t1.shape
         ### Convertir df a html con pandas
         df_usr_t1_html = df_usr_t1.to_html(classes="table table-striped table-sm", border=0, justify="left")
@@ -187,9 +194,8 @@ def part_analysis(request):
                 {'result_present': True,
                 'div1': div1,
                 #'div2': div2,
-                'df': df_usr_t1_html,
+                'df': df_usr_t1_html, 'users_list': users_list,
                 'cant_part': cant_part[0]})
-
     return render(request,'participants.html', {'result_present': False})
 
 ##### Análisis de actividades  -------------------------------
@@ -197,12 +203,12 @@ def part_analysis(request):
 def act_analysis(request):
     dff_name = request.session.session_key + "_dff"
     if dff_name in my_globals.DfC.keys():
-        div1 = activities.plot_act_acc(my_globals.DfC[dff_name])
-        div2 = activities.plot_act_acc2(my_globals.DfC[dff_name])
-        return render(request, 'activities.html',
+        div1 = cluster.plot_act_acc(my_globals.DfC[dff_name])
+        div2 = cluster.plot_act_acc2(my_globals.DfC[dff_name])
+        return render(request, 'cluster.html',
                 {'result_present': True,
                 'div1': div1,
                 'div2': div2
                 #'df': df_usr_t1_html,'cant_part': cant_part[0]
                 })
-    return render(request,'activities.html', {'result_present': False})
+    return render(request,'cluster.html', {'result_present': False})
