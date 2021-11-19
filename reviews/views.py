@@ -196,6 +196,8 @@ def part_analysis(request):
         div1 = participants.plot_part_act2(my_globals.DfC[dff_name])
         ### Agrupar usuariosmy_g
         df_usr_t1 = data.merge_part_df(my_globals.DfC[dff_name])
+        df_usr_cluster = data.create_df_cluster(df_usr_t1)
+        div_usr_cluster = participants.plot_part_cluster(df_usr_cluster)
         users_list = data.get_user_list(my_globals.DfC[dff_name])
         cant_part = data.get_num_participants(my_globals.DfC[dff_name])
         active_participation = data.get_num_active_participation(my_globals.DfC[dff_name])
@@ -205,7 +207,7 @@ def part_analysis(request):
         df_usr_t1_html = df_usr_t1.to_html(classes="table table-striped table-sm", border=0, justify="left")
         return render(request, 'participants.html',
                 {'result_present': True,
-                'div1': div1,
+                'div1': div1, 'div_usr_cluster':div_usr_cluster,
                 #'div2': div2,
                 'df': df_usr_t1_html, 'users_list': users_list, 'cant_tareas_subidas': cant_tareas_subidas,
                 'cant_part': cant_part, 'active_participation': active_participation})

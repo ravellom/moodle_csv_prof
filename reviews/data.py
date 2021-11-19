@@ -7,7 +7,7 @@ import pandas as pd
 from django.conf import settings
 import os
 import IP2Location
-from . import moodle_backup
+from . import moodle_backup, cluster
 
 ######## VARIABLES GLOBALES ·········
 
@@ -151,6 +151,13 @@ def merge_part_df(df):
     user_full['Foros_participación'] = user_full['Foros_participación'].fillna(0)
     user_full['Foros_participación'] = user_full['Foros_participación'].astype(int)
     return user_full
+
+def create_df_cluster(user_full):
+        user_full_km = cluster.kmeans_func(user_full[['Accesos', 'Tareas_subidas', 'Foros_participación']]) 
+        user_pca = cluster.pca_func(user_full_km[['Accesos', 'Tareas_subidas', 'Foros_participación']])
+        user_pca = pd.DataFrame(user_pca, columns=('pca1','pca2'))
+        user_pca = user_pca.join(user_full_km)
+        return user_pca
  
 ########  ·········
 

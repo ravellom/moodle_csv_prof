@@ -40,9 +40,26 @@
       </div>
     </div>
   </div>
-</p>
-{% if result_present %}
+  </p>
+  {% if result_present %}
 
+  
+  <div class="row">
+    <p>
+    <div class="col-sm-6">
+      <div class="container body-content shadow">
+        <p><strong>Cantidad de participantes por actividad:</strong></p>
+        <p>{{ div1|safe }}</p>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="container body-content shadow">
+        <p><strong>Cluster:</strong></p>
+        <p>{{ div_usr_cluster|safe }}</p>
+      </div>
+    </div>
+    </p>
+  </div>
 
     <div class="container body-content shadow">
       <p><strong>Lista de usuarios con cantidad de accesos:</strong></p>
@@ -51,42 +68,34 @@
       </div>
     </div>
 
+    <p>
 
-     <div class="container body-content shadow">
-      <p><strong>Cantidad de participantes por actividad:</strong></p>
-      <p>{{ div1|safe }}</p>
-    </div>
+      <!-- <div class="card shadow">
+        <div class="card-body">
+          <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown link
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              {% for user in users_list %}
+              <li><a class="dropdown-item" href="#">{{ user }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
 
-
-
-
-<p>
-<div class="card shadow">
-  <div class="card-body">
-    <div class="dropdown">
-      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-        data-bs-toggle="dropdown" aria-expanded="false">
-        Dropdown link
-      </a>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        {% for user in users_list %}
-        <li><a class="dropdown-item" href="#">{{ user }}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
+        </div>
+      </div> -->
+    </p>
 
   </div>
-</div>
-</p>
+  <script src="{% static 'plotly-latest.min.js' %}"></script>
+  {% else %}
+  <div class="alert alert-danger" role="alert">
+    <strong>Atención!</strong> No ha subido ningún reporte!
+  </div>
 
-</div>
-<script src="{% static 'plotly-latest.min.js' %}"></script>
-{% else %}
-<div class="alert alert-danger" role="alert">
-  <strong>Atención!</strong> No ha subido ningún reporte!
-</div>
-
-{% endif %}
+  {% endif %}
 
 
-{% endblock %}
+  {% endblock %}
