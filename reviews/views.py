@@ -195,7 +195,7 @@ def part_analysis(request):
         ### Gráfico de cantidad de participantes por actividad
         div1 = participants.plot_part_act2(my_globals.DfC[dff_name])
         ### Agrupar usuariosmy_g
-        df_usr_t1 = data.get_part_access(my_globals.DfC[dff_name])
+        df_usr_t1 = data.merge_part_df(my_globals.DfC[dff_name])
         users_list = data.get_user_list(my_globals.DfC[dff_name])
         cant_part = data.get_num_participants(my_globals.DfC[dff_name])
         active_participation = data.get_num_active_participation(my_globals.DfC[dff_name])

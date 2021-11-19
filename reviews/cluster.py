@@ -22,12 +22,12 @@ def kmeans_func(df):
         df['cluster'] = kmeans.labels_
 
         # Reducing data dimensions 
-        PCA_ = PCA(n_components = 2).fit(df)
+        # PCA_ = PCA(n_components = 2).fit(df)
 
-        # Applying the PCA
-        PCA_2 = PCA_.transform(df)
+        # # Applying the PCA
+        # PCA_2 = PCA_.transform(df)
 
-        return PCA_2
+        return df
 
 def plot_act_acc(df):
         df_comp = df['Component'].value_counts().reset_index().rename(

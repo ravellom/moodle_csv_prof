@@ -138,7 +138,19 @@ def participants_per_resource(self) -> pd.DataFrame:
 
 def merge_part_df(df):
     user_acc = get_part_access(df)
-    return df
+    tareas = df[df.Event == "Se ha enviado una entrega"][['Name']].value_counts().reset_index().rename(
+            columns={'Name': 'Usuario', 0:'N'} )
+    foro_part = ["Algún contenido ha sido publicado.", "Tema creado", "Mensaje creado", "Mensaje actualizado"]
+    foros = df[df.Event.isin(foro_part)][['Name']].value_counts().reset_index().rename(
+            columns={'Name': 'Usuario', 0:'N'} )
+    user_full = user_acc.merge(tareas, how='left', on='Usuario').rename(columns={'N': 'Tareas_subidas'})
+    user_full = user_full.merge(foros, how='left', on='Usuario').rename(
+            columns={'N': 'Foros_participación'})
+    user_full['Tareas_subidas'] = user_full['Tareas_subidas'].fillna(0)
+    user_full['Tareas_subidas'] = user_full['Tareas_subidas'].astype(int)
+    user_full['Foros_participación'] = user_full['Foros_participación'].fillna(0)
+    user_full['Foros_participación'] = user_full['Foros_participación'].astype(int)
+    return user_full
  
 ########  ·········
 
@@ -170,7 +182,6 @@ def get_num_session(df) -> int:
 def get_num_upload_assignments(df) -> int:
     result = len(df[df.Event == "Se ha enviado una entrega"])
     return result 
-    "Se ha enviado una entrega"
 
 def get_course_headmap(df):
     df2 = df[["wd","hour"]].value_counts().reset_index().rename(columns={0:'N'})

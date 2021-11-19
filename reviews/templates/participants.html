@@ -42,24 +42,23 @@
   </div>
 </p>
 {% if result_present %}
-<div class="row">
-  <div class="col-sm-6">
+
+
     <div class="container body-content shadow">
       <p><strong>Lista de usuarios con cantidad de accesos:</strong></p>
       <div class="table-responsive">
         {{ df|safe }}
       </div>
     </div>
-  </div>
 
-  <div class="col-sm-6">
-    <div class="container body-content shadow">
+
+     <div class="container body-content shadow">
       <p><strong>Cantidad de participantes por actividad:</strong></p>
       <p>{{ div1|safe }}</p>
     </div>
-  </div>
 
-</div>
+
+
 
 <p>
 <div class="card shadow">
