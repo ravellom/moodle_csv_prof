@@ -21,10 +21,16 @@ Subir datos
           <h2>Subir datos</h2>
           <form method="post" enctype="multipart/form-data">
             <p>
-              <div class="mb-3">
-                <label for="formFile" class="form-label">Suba un fichero .csv</label>
-                <input class="form-control" name="myfile" type="file" id="formFile">
-              </div>
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Suba el reporte del curso .csv</label>
+              <input class="form-control" name="myfile1" type="file" id="formFile">
+            </div>
+            </p>
+            <p>
+            <div class="mb-3">
+              <label for="formFile" class="form-label">(opcional) Suba el fichero de respaldo del curso .mbz</label>
+              <input class="form-control" name="myfile2" type="file" id="formFile">
+            </div>
             </p>
             {% csrf_token %}
             <p>
@@ -34,12 +40,12 @@ Subir datos
               {% if result_present %}
               <button type="button" class="btn btn-sm btn-link">
                 <a href="{% url 'data_analysis' %}?new_df=True">Eliminar Datos</a></button>
-              
+
               <h5>Rango de fecha de los datos:<br>
                 <span class="badge bg-success">{{ date_s }}</span> -
                 <span class="badge bg-success">{{ date_f }}</span>
               </h5>
-              
+
               <h5>Cantidad de accesos: <span class="badge bg-success"> {{ c_acc }}</span></h5>
               {% endif %}
 
@@ -50,6 +56,7 @@ Subir datos
       </div>
       </p>
     </div>
+
     {% if result_present %}
     <div class="col-sm-6">
       <p>
@@ -76,7 +83,7 @@ Subir datos
           </form>
         </div>
       </div>
-    </p>
+      </p>
     </div>
   </div>
 </div>
