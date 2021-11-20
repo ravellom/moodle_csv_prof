@@ -68,14 +68,22 @@ Subir datos
             <div class="form-group">
 
               <p>Fecha inicio: <input type="text" name="date_s" id="basicDate" placeholder="Seleccione una fecha"
-                  data-input></p>
-              <p>Fecha final: <input type="text" name="date_f" id="basicDate2" placeholder="Seleccione una fecha"
-                  data-input></p>
+                  data-input style="width : 120px">
+              Fecha final: <input type="text" name="date_f" id="basicDate2" placeholder="Seleccione una fecha"
+                  data-input style="width : 120px"></p>
             </div>
             </p>
 
             {% csrf_token %}
             <p>
+              <p>Seleccione los participantes a excluir (profesores, gestores, invitados, etc.)</p>
+              <select id=multiple name="multiple[]" multiple="multiple" size="6">
+                {% for user in users_list %}
+                <option value="{{ user }}">{{ user }}</option>
+                {% endfor %}
+              </select>
+            </p>
+            <p></p>
             <div class="form-group">
               <button type="submit" class="btn btn-sm btn-primary">Filtrar</button>
             </div>

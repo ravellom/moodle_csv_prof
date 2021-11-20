@@ -99,7 +99,6 @@ def data_analysis(request):
     df_name =  request.session.session_key + "_df"
     dff_name = request.session.session_key + "_dff"
     new_df = bool(request.GET.get("new_df", False))
-
     # Si pinchó en eliminar datos
     if new_df:
         my_globals.DfC.pop(df_name)
@@ -110,6 +109,7 @@ def data_analysis(request):
     if df_name in my_globals.DfC.keys(): 
         df = my_globals.DfC[df_name]
         dff = my_globals.DfC[dff_name]
+        lista = request.POST.getlist('multiple[]')
         if "date_s" in request.POST and "date_f" in request.POST: ## Filtrar
             # Capturar fechas en POST y guardarlas en session
             request.session['date_s'] = request.POST['date_s']
@@ -121,17 +121,19 @@ def data_analysis(request):
             #dff = my_globals.DfC[dff_name]
             df2 = dff.head(10)
             df2_html = df2.to_html(classes="table table-striped table-sm", border=0)
+            users_list = data.get_user_list(my_globals.DfC[dff_name])
             return render(request, 'data_analysis.html',
                 {'result_present': True,
-                    'df': df2_html,                    
+                    'df': df2_html, 'users_list': users_list,                  
                     'date_s': request.session['date_s'],
                     'date_f': request.session['date_f'],
                     'c_acc' : dff.shape[0]})
         df2 = dff.head(10)
         df2_html = df2.to_html(classes="table table-striped table-sm", border=0)
+        users_list = data.get_user_list(my_globals.DfC[dff_name])
         return render(request, 'data_analysis.html',
             {'result_present': True,
-                'df': df2_html,                    
+                'df': df2_html, 'users_list': users_list,
                 'date_s': request.session['date_s'],
                 'date_f': request.session['date_f'],
                 'c_acc' : dff.shape[0]})
@@ -155,9 +157,10 @@ def data_analysis(request):
             request.session['date_f'] = df["date"].max().strftime('%Y-%m-%d')   
             df2 = df.head(10)
             df2_html = df2.to_html(classes="table table-striped", border=0)
+            users_list = data.get_user_list(my_globals.DfC[dff_name])
             return render(request, 'data_analysis.html',
-                {'result_present': True,
-                'df': df2_html,
+                {'result_present': True, 
+                'df': df2_html, 'users_list': users_list,
                 'date_s': request.session['date_s'],
                 'date_f': request.session['date_f'],
                 'c_acc' : df.shape[0]})
