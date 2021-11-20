@@ -101,6 +101,7 @@ Subir datos
 {% if result_present %}
 <p>
 <div class="container body-content">
+  {{ lista_usuarios_exclu }}
   <p><strong>10 primeros registros de los datos subidos:</strong></p>
   <div class="table-responsive">
     {{ df|safe }}
