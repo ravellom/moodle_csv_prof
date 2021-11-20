@@ -26,7 +26,6 @@ def logout_view(request):
         my_globals.DfC.pop(dff_name)
     logout(request)
     return redirect('login')
-    
 
 def login_view(request):
     error_message = None
@@ -45,7 +44,6 @@ def login_view(request):
                     return redirect('index')
         else:
             error_message = 'Ups ... usuario o contraseña incorrectos!'
-
     context = {
         'form': form,
         'error_message': error_message

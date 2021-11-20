@@ -48,24 +48,30 @@
     <p>
     <div class="col-sm-6">
       <div class="container body-content shadow">
-        <p><strong>Cantidad de participantes por actividad:</strong></p>
-        <p>{{ div1|safe }}</p>
+        <div class="card-body">
+        <strong>Cantidad de participantes por actividad:</strong>
+        {{ div1|safe }}
       </div>
     </div>
+  </div>
     <div class="col-sm-6">
       <div class="container body-content shadow">
-        <p><strong>Cluster:</strong></p>
-        <p>{{ div_usr_cluster|safe }}</p>
+        <div class="card-body">
+        <strong>Cluster:</strong>
+        {{ div_usr_cluster|safe }}
       </div>
     </div>
+  </div>
     </p>
   </div>
 
     <div class="container body-content shadow">
+      <div class="card-body">
       <p><strong>Lista de usuarios con cantidad de accesos:</strong></p>
       <div class="table-responsive">
         {{ df|safe }}
       </div>
+    </div>
     </div>
 
     <p>

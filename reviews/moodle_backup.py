@@ -5,7 +5,6 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 
 
-
 def course_structure(df_main, backup) -> pd.DataFrame:
     #Añade la sección a la que pertenece cada recurso dentro del curso de Moodle.
     tarfile.open(fileobj=backup).extract(member='moodle_backup.xml')

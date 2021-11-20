@@ -25,7 +25,6 @@ def kmeans_func(df):
 def pca_func(df):
         #Reducing data dimensions 
         PCA_ = PCA(n_components = 2).fit(df)
-
         # Applying the PCA
         PCA_2 = PCA_.transform(df)
         return PCA_2

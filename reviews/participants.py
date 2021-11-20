@@ -32,12 +32,15 @@ def plot_part_act2(df):
         return plot_div
 
 def plot_part_cluster(df):
-        fig = px.scatter(df, x='pca1', y='pca2', color='cluster')
+        df['cluster'] = df['cluster'].map({0:'Grupo1', 1:'Grupo2'}) 
+        df.loc[df.cluster == 1] = "Grupo2"
+        fig = px.scatter(df, x='pca1', y='pca2', color='cluster', hover_data=["Usuario"])
                         #marginal_x='histogram', marginal_y='histogram',
-                        #trendline="ols", template="simple_white", size=df_access3['N'])#, hover_data=['petal_width'])
-        fig.update_layout({"title": 'Cluster de estudiantes',
+                        #trendline="ols", template="simple_white", size=df_access3['N'])#, )
+        fig.update_layout(my_globals.BASE_LAYOUT)    
+        fig.update_layout({
                         "xaxis": {"title":"Componente principal 1"},
-                        "yaxis": {"title":"Componente principal 1"},
+                        "yaxis": {"title":"Componente principal 2"},
                         "showlegend": True, 
                         'legend' : {"title":"Clusters"},
                         #'width': 900,

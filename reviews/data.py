@@ -157,6 +157,7 @@ def create_df_cluster(user_full):
         user_pca = cluster.pca_func(user_full_km[['Accesos', 'Tareas_subidas', 'Foros_participación']])
         user_pca = pd.DataFrame(user_pca, columns=('pca1','pca2'))
         user_pca = user_pca.join(user_full_km)
+        user_pca = user_pca.join(user_full['Usuario'])
         return user_pca
  
 ########  ·········
