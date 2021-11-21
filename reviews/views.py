@@ -121,17 +121,6 @@ def data_analysis(request):
                 date_f= request.session['date_f']
                 dff = df[ (df['datefull'] > pd.to_datetime(date_s)) & (df['datefull'] <= pd.to_datetime(date_f)) ]
                 my_globals.DfC[dff_name] = dff
-            #dff = my_globals.DfC[dff_name]
-            # df2 = dff.head(10)
-            # df2_html = df2.to_html(classes="table table-striped table-sm", border=0)
-            # users_list = data.get_user_list(my_globals.DfC[dff_name])
-            # return render(request, 'data_analysis.html',
-            #     {'result_present': True,
-            #         'lista_usuarios_exclu':lista_usuarios_exclu,
-            #         'df': df2_html, 'users_list': users_list,                  
-            #         'date_s': request.session['date_s'],
-            #         'date_f': request.session['date_f'],
-            #         'c_acc' : dff.shape[0]})
         df2 = dff.head(10)
         df2_html = df2.to_html(classes="table table-striped table-sm", border=0)
         users_list = data.get_user_list(my_globals.DfC[dff_name])
