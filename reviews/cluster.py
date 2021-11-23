@@ -15,7 +15,10 @@ def kmeans_func(df):
         kmeans = KMeans(n_clusters = 2)
         # Training our model
         DF_NORM  = preprocessing.normalize(df) # Normalizing the data
-        kmeans.fit(DF_NORM)
+        try:
+                kmeans.fit(DF_NORM)
+        except:
+                return "Se necesitan más de 2 participantes para el análisis de cluster"
         # You can see the labels (clusters) assigned for each data point with the function labels_
         kmeans.labels_
         # Assigning the labels to the initial dataset

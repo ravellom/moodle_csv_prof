@@ -133,7 +133,7 @@ def data_analysis(request):
 
     # No está creado el df
     if df_name not in my_globals.DfC.keys(): 
-        if request.method == 'POST' and request.FILES['myfile1']:
+        if request.method == 'POST' and 'myfile1' in request.FILES:
             myfile1 = request.FILES['myfile1']
             #try:
             my_globals.DfC[df_name] = data.data_upload(myfile1)
@@ -190,8 +190,11 @@ def part_analysis(request):
         div1 = participants.plot_part_act2(my_globals.DfC[dff_name])
         ### Agrupar usuariosmy_g
         df_usr_t1 = data.merge_part_df(my_globals.DfC[dff_name])
-        df_usr_cluster = data.create_df_cluster(df_usr_t1)
-        div_usr_cluster = participants.plot_part_cluster(df_usr_cluster)
+        try: 
+            df_usr_cluster = data.create_df_cluster(df_usr_t1)
+            div_usr_cluster = participants.plot_part_cluster(df_usr_cluster)
+        except Exception:
+            div_usr_cluster = "Se necesitan más de 2 participantes para el análisis de cluster"
         users_list = data.get_user_list(my_globals.DfC[dff_name])
         cant_part = data.get_num_participants(my_globals.DfC[dff_name])
         active_participation = data.get_num_active_participation(my_globals.DfC[dff_name])

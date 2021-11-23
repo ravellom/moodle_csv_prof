@@ -143,18 +143,18 @@ def merge_part_df(df):
     foro_part = ["Algún contenido ha sido publicado.", "Tema creado", "Mensaje creado", "Mensaje actualizado"]
     foros = df[df.Event.isin(foro_part)][['Name']].value_counts().reset_index().rename(
             columns={'Name': 'Usuario', 0:'N'} )
-    user_full = user_acc.merge(tareas, how='left', on='Usuario').rename(columns={'N': 'Tareas_subidas'})
+    user_full = user_acc.merge(tareas, how='left', on='Usuario').rename(columns={'N': 'Tareas subidas'})
     user_full = user_full.merge(foros, how='left', on='Usuario').rename(
-            columns={'N': 'Foros_participación'})
-    user_full['Tareas_subidas'] = user_full['Tareas_subidas'].fillna(0)
-    user_full['Tareas_subidas'] = user_full['Tareas_subidas'].astype(int)
-    user_full['Foros_participación'] = user_full['Foros_participación'].fillna(0)
-    user_full['Foros_participación'] = user_full['Foros_participación'].astype(int)
+            columns={'N': 'Participación en foros'})
+    user_full['Tareas subidas'] = user_full['Tareas subidas'].fillna(0)
+    user_full['Tareas subidas'] = user_full['Tareas subidas'].astype(int)
+    user_full['Participación en foros'] = user_full['Participación en foros'].fillna(0)
+    user_full['Participación en foros'] = user_full['Participación en foros'].astype(int)
     return user_full
 
 def create_df_cluster(user_full):
-        user_full_km = cluster.kmeans_func(user_full[['Accesos', 'Tareas_subidas', 'Foros_participación']]) 
-        user_pca = cluster.pca_func(user_full_km[['Accesos', 'Tareas_subidas', 'Foros_participación']])
+        user_full_km = cluster.kmeans_func(user_full[['Accesos', 'Tareas subidas', 'Participación en foros']]) 
+        user_pca = cluster.pca_func(user_full_km[['Accesos', 'Tareas subidas', 'Participación en foros']])
         user_pca = pd.DataFrame(user_pca, columns=('pca1','pca2'))
         user_pca = user_pca.join(user_full_km)
         user_pca = user_pca.join(user_full['Usuario'])
