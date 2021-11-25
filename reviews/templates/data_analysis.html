@@ -11,7 +11,6 @@ Subir datos
 <link href="{% static 'flatpickr.min.css' %}" rel="stylesheet">
 
 <div class="container body-content">
-
   <div class="row">
 
     <div class="col-sm-6">
@@ -19,13 +18,20 @@ Subir datos
       <div class="card shadow">
         <div class="card-body">
           <h2>Subir datos</h2>
-          <form method="post" enctype="multipart/form-data">
+          <form method="post" enctype="multipart/form-data" id="fileForm">
             <p>
-              <div class="mb-3">
-                <label for="formFile" class="form-label">Suba un fichero .csv</label>
-                <input class="form-control" name="myfile" type="file" id="formFile">
-              </div>
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Suba el reporte del curso (Tipo: .csv; Tamaño máximo: 10Mb):</label>
+              <input class="form-control" name="myfile1" type="file" id="file" accept=".csv"
+                onchange="Filevalidation()">
+            </div>
             </p>
+            <!-- <p>
+            <div class="mb-3">
+              <label for="formFile" class="form-label">(opcional) Suba el fichero de respaldo del curso .mbz</label>
+              <input class="form-control" name="myfile2" type="file" id="formFile">
+            </div>
+            </p> -->
             {% csrf_token %}
             <p>
             <div class="form-group">
@@ -34,12 +40,12 @@ Subir datos
               {% if result_present %}
               <button type="button" class="btn btn-sm btn-link">
                 <a href="{% url 'data_analysis' %}?new_df=True">Eliminar Datos</a></button>
-              
+
               <h5>Rango de fecha de los datos:<br>
                 <span class="badge bg-success">{{ date_s }}</span> -
                 <span class="badge bg-success">{{ date_f }}</span>
               </h5>
-              
+
               <h5>Cantidad de accesos: <span class="badge bg-success"> {{ c_acc }}</span></h5>
               {% endif %}
 
@@ -50,6 +56,10 @@ Subir datos
       </div>
       </p>
     </div>
+
+
+
+
     {% if result_present %}
     <div class="col-sm-6">
       <p>
@@ -61,22 +71,33 @@ Subir datos
             <div class="form-group">
 
               <p>Fecha inicio: <input type="text" name="date_s" id="basicDate" placeholder="Seleccione una fecha"
-                  data-input></p>
-              <p>Fecha final: <input type="text" name="date_f" id="basicDate2" placeholder="Seleccione una fecha"
-                  data-input></p>
+                  data-input style="width : 120px">
+                Fecha final: <input type="text" name="date_f" id="basicDate2" placeholder="Seleccione una fecha"
+                  data-input style="width : 120px"></p>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-sm btn-primary">Filtrar</button>
             </div>
             </p>
 
             {% csrf_token %}
             <p>
+            <p>Seleccione los participantes a excluir (profesores, gestores, invitados, etc.)</p>
+            <select id=multiple name="multiple[]" multiple="multiple" size="4" class="list-group">
+              {% for user in users_list %}
+              <option value="{{ user }}" class="list-group-item list-group-item-action">{{ user }}</option>
+              {% endfor %}
+            </select>
+            </p>
+            <p></p>
             <div class="form-group">
-              <button type="submit" class="btn btn-sm btn-primary">Filtrar</button>
+              <button type="submit" class="btn btn-sm btn-primary">Excluir usuarios seleccionados</button>
             </div>
             </p>
           </form>
         </div>
       </div>
-    </p>
+      </p>
     </div>
   </div>
 </div>
@@ -86,6 +107,7 @@ Subir datos
 {% if result_present %}
 <p>
 <div class="container body-content">
+  {{ lista_usuarios_exclu }}
   <p><strong>10 primeros registros de los datos subidos:</strong></p>
   <div class="table-responsive">
     {{ df|safe }}
@@ -102,6 +124,5 @@ Subir datos
   </div>
 </div>
 {% endfor %}
-
 
 {% endblock %}

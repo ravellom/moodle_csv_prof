@@ -53,8 +53,8 @@
   <script src="{% static 'bootstrap.min.js'  %}"></script>
   <script src="{% static 'bootstrap.bundle.min.js'  %}"></script>
 
-    <!-- jquery -->
-    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+  <!-- jquery -->
+  <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
 
   <!--  Flatpickr  -->
   <script src="{% static 'flatpickr.min.4.6.9.js' %}"></script>
@@ -67,6 +67,22 @@
     });
 
   </script>
+
+  <script>
+    $("input[type='file']").on("change", function () {
+      if (this.files[0].size > 10000000) {
+        alert("Por favor suba un fichero menor de 10MB. Gracias!!");
+        $(this).val(null);
+      }
+      var filename = $(this).val();
+      var fileExtension = ['xlsx', 'xls', 'csv'];
+      if ($.inArray(filename.split('.').pop().toLowerCase(), fileExtension) == -1) {
+        alert("Solo se pueden subir ficheros de tipo '.csv'");
+        $(this).val(null);
+      }
+      }); 
+  </script>
+
 </body>
 
 </html>

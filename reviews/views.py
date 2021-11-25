@@ -14,15 +14,16 @@ from django.contrib import messages
 
 # My libs
 import pandas as pd
-from . import data, general, participants, cluster, my_globals
+from . import data, general, participants, cluster, my_globals, moodle_backup
 from .forms import NewUserForm
 
 ####### login infrastructure  -------------- 
 def logout_view(request):
     df_name =  request.session.session_key + "_df"
     dff_name = request.session.session_key + "_dff"
-    my_globals.DfC.pop(df_name)
-    my_globals.DfC.pop(dff_name)
+    if df_name in my_globals.DfC.keys(): 
+        my_globals.DfC.pop(df_name)
+        my_globals.DfC.pop(dff_name)
     logout(request)
     return redirect('login')
 
@@ -43,7 +44,6 @@ def login_view(request):
                     return redirect('index')
         else:
             error_message = 'Ups ... usuario o contraseña incorrectos!'
-
     context = {
         'form': form,
         'error_message': error_message
@@ -99,7 +99,6 @@ def data_analysis(request):
     df_name =  request.session.session_key + "_df"
     dff_name = request.session.session_key + "_dff"
     new_df = bool(request.GET.get("new_df", False))
-
     # Si pinchó en eliminar datos
     if new_df:
         my_globals.DfC.pop(df_name)
@@ -110,49 +109,51 @@ def data_analysis(request):
     if df_name in my_globals.DfC.keys(): 
         df = my_globals.DfC[df_name]
         dff = my_globals.DfC[dff_name]
+        if request.POST.getlist('multiple[]'):
+            lista_usuarios_exclu = request.POST.getlist('multiple[]')
+            my_globals.DfC[dff_name] = dff[~dff.Name.isin(lista_usuarios_exclu)]
         if "date_s" in request.POST and "date_f" in request.POST: ## Filtrar
-            # Capturar fechas en POST y guardarlas en session
-            request.session['date_s'] = request.POST['date_s']
-            request.session['date_f'] = request.POST['date_f']
-            date_s= request.session['date_s']
-            date_f= request.session['date_f']
-            dff = df[ (df['datefull'] > pd.to_datetime(date_s)) & (df['datefull'] < pd.to_datetime(date_f)) ]
-            my_globals.DfC[dff_name] = dff
-            #dff = my_globals.DfC[dff_name]
-            df2 = dff.head(10)
-            df2_html = df2.to_html(classes="table table-striped table-sm", border=0)
-            return render(request, 'data_analysis.html',
-                {'result_present': True,
-                    'df': df2_html,                    
-                    'date_s': request.session['date_s'],
-                    'date_f': request.session['date_f'],
-                    'c_acc' : dff.shape[0]})
-        df2 = dff.head(10)
+            if request.POST['date_s'] > '' and request.POST['date_f'] > '':
+                # Capturar fechas en POST y guardarlas en session
+                request.session['date_s'] = request.POST['date_s']
+                request.session['date_f'] = request.POST['date_f']
+                date_s= request.session['date_s']
+                date_f= request.session['date_f']
+                dff = df[ (df['datefull'] > pd.to_datetime(date_s)) & (df['datefull'] <= pd.to_datetime(date_f)) ]
+                my_globals.DfC[dff_name] = dff
+        df2 = my_globals.DfC[dff_name].head(10)
         df2_html = df2.to_html(classes="table table-striped table-sm", border=0)
+        users_list = data.get_user_list(my_globals.DfC[dff_name])
         return render(request, 'data_analysis.html',
             {'result_present': True,
-                'df': df2_html,                    
+                'df': df2_html, 'users_list': users_list,
                 'date_s': request.session['date_s'],
                 'date_f': request.session['date_f'],
-                'c_acc' : dff.shape[0]})
+                'c_acc' : len(my_globals.DfC[dff_name])})
 
     # No está creado el df
     if df_name not in my_globals.DfC.keys(): 
-        if request.method == 'POST' and request.FILES['myfile']:
-            myfile = request.FILES['myfile']
-            try:
-                my_globals.DfC[df_name] = data.data_upload(myfile)
-                my_globals.DfC[dff_name] = my_globals.DfC[df_name]
-            except Exception:
-                messages.error(request,"Algo pasó!")
+        if request.method == 'POST' and 'myfile1' in request.FILES:
+            myfile1 = request.FILES['myfile1']
+            #try:
+            my_globals.DfC[df_name] = data.data_upload(myfile1)
+            # if 'myfile2' in request.FILES:
+            #     myfile2 = request.FILES['myfile2']
+            #     my_globals.DfC[df_name] = moodle_backup.add_section_column(my_globals.DfC[df_name], myfile2)
+            # else:
+            #     myfile2 = ""
+            my_globals.DfC[dff_name] = my_globals.DfC[df_name]
+            # except Exception:
+            #     messages.error(request,"Algo pasó!")
             df = my_globals.DfC[df_name]  
             request.session['date_s'] = df["date"].min().strftime('%Y-%m-%d') 
             request.session['date_f'] = df["date"].max().strftime('%Y-%m-%d')   
             df2 = df.head(10)
             df2_html = df2.to_html(classes="table table-striped", border=0)
+            users_list = data.get_user_list(my_globals.DfC[dff_name])
             return render(request, 'data_analysis.html',
-                {'result_present': True,
-                'df': df2_html,
+                {'result_present': True, 
+                'df': df2_html, 'users_list': users_list,
                 'date_s': request.session['date_s'],
                 'date_f': request.session['date_f'],
                 'c_acc' : df.shape[0]})
@@ -170,11 +171,14 @@ def general_analysis(request):
         div3 = general.plot_act_acc(my_globals.DfC[dff_name])
         div4 = general.plot_act_acc2(my_globals.DfC[dff_name])
         div5 = general.plot_country_count_IP(my_globals.DfC[dff_name])
+        cant_part = data.get_num_participants(my_globals.DfC[dff_name])
+        cant_acc = len(my_globals.DfC[dff_name])
+        cant_rec = data.get_num_resource(my_globals.DfC[dff_name])
         return render(request, 'general.html',
                       {'result_present': True,
                        'div1': div1, 'div2': div2,
-                       'div3': div3, 'div4': div4,
-                       'div5': div5})
+                       'div3': div3, 'div4': div4, 'cant_acc': cant_acc, 'cant_rec': cant_rec,  
+                       'div5': div5, 'cant_part': cant_part})
     return render(request,'general.html', {'result_present': False})
 
 #####  Análisis de participantes  -------------------------------
@@ -185,17 +189,25 @@ def part_analysis(request):
         ### Gráfico de cantidad de participantes por actividad
         div1 = participants.plot_part_act2(my_globals.DfC[dff_name])
         ### Agrupar usuariosmy_g
-        df_usr_t1 = data.get_part_access(my_globals.DfC[dff_name])
+        df_usr_t1 = data.merge_part_df(my_globals.DfC[dff_name])
+        try: 
+            df_usr_cluster = data.create_df_cluster(df_usr_t1)
+            div_usr_cluster = participants.plot_part_cluster(df_usr_cluster)
+        except Exception:
+            div_usr_cluster = "Se necesitan más de 2 participantes para el análisis de cluster"
         users_list = data.get_user_list(my_globals.DfC[dff_name])
-        cant_part = df_usr_t1.shape
+        cant_part = data.get_num_participants(my_globals.DfC[dff_name])
+        active_participation = data.get_num_active_participation(my_globals.DfC[dff_name])
+        #cant_sesiones = data.get_num_session(my_globals.DfC[dff_name])
+        cant_tareas_subidas = data.get_num_upload_assignments(my_globals.DfC[dff_name])
         ### Convertir df a html con pandas
         df_usr_t1_html = df_usr_t1.to_html(classes="table table-striped table-sm", border=0, justify="left")
         return render(request, 'participants.html',
                 {'result_present': True,
-                'div1': div1,
+                'div1': div1, 'div_usr_cluster':div_usr_cluster,
                 #'div2': div2,
-                'df': df_usr_t1_html, 'users_list': users_list,
-                'cant_part': cant_part[0]})
+                'df': df_usr_t1_html, 'users_list': users_list, 'cant_tareas_subidas': cant_tareas_subidas,
+                'cant_part': cant_part, 'active_participation': active_participation})
     return render(request,'participants.html', {'result_present': False})
 
 ##### Análisis de actividades  -------------------------------
