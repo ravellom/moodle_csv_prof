@@ -15,7 +15,7 @@ services:
       - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
       - DEPLOY=0
     volumes:
-      - static-data:/static
+      - static-data:/app/staticfiles
 
 volumes:
   static-data:
