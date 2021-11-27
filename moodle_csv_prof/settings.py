@@ -31,9 +31,6 @@ DEBUG = bool(int(environ.get("DEBUG", 1)))
 
 ALLOWED_HOSTS = environ.get("ALLOWED_HOSTS", "").split(",")[1:]
 
-# Acitvar translations
-USE_I18N = True
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
