@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block 2navbar %}
+{% include '2bar_prof.html' %}
+{% endblock 2navbar %}
+
+{% block content %}
+
+<div class="container body-content">
+  <p>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2>Análisis general</h2>
+          <p>Basados en accesos de los participantes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-2">
+      <div class="card text-white bg-primary mb-3 shadow">
+        <div class="card-body">
+          <h1 class="card-title">{{ cant_acc }}</h1>
+          <p class="card-text">Accesos</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="card text-white bg-warning mb-3 shadow">
+        <div class="card-body">
+          <h1 class="card-title">{{ cant_part }}</h1>
+          <p class="card-text">Participantes</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="card text-white bg-success mb-3 shadow">
+        <div class="card-body">
+          <h1 class="card-title">{{ cant_rec }}</h1>
+          <p class="card-text">Recursos</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </p>
+  {% if result_present %}
+  <p>
+  <div class="row">
+    <div class="col-sm-8 h-100">
+      <div class="card shadow">
+        <div class="card-body">
+          <strong>Accesos diarios:</strong>
+          {{ div1|safe }}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4 h-100">
+      <div class="card shadow">
+        <div class="card-body">
+          <strong>Accesos por día de la semana:</strong>
+          {{ div2|safe }}
+        </div>
+      </div>
+    </div>
+  </div>
+  </p>
+
+  <p>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="container body-content shadow">
+        <strong>Tipos de actividades más accedidas:</strong>
+        {{ div3|safe }}
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="container body-content shadow">
+        <strong>Actividades más accedidas:</strong>
+        {{ div4|safe }}
+      </div>
+    </div>
+  </div>
+  </p>
+
+  <div class="card shadow">
+    <div class="card-body">
+      <p><strong>Accesos por países:</strong></p>
+      {{ div5|safe }}
+    </div>
+
+  </div>
+</div>
+</p>
+<p></p>
+<p></p>
+<script src="{% static 'plotly-latest.min.js' %}"></script>
+{% else %}
+<div class="alert alert-danger shadow" role="alert">
+  <strong>Atención!</strong> No ha subido ningún reporte!
+</div>
+{% endif %}
+
+{% endblock %}

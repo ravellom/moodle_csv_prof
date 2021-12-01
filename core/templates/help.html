@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% if not request.user.is_authenticated %}
+
+  {% block 2navbar %}
+
+    {% if request.session.mode == "prof" %}
+        {% include '2bar_prof.html' %}      
+    {% endif %}
+
+    {% if request.session.mode == "direct" %}
+        {% include '2bar_direct.html' %}
+    {% endif %}
+    
+  {% endblock 2navbar %}
+
+{% endif %}
+
+{% block content %}
+
+<div class="container body-content">
+  <p>
+  <div class="card shadow">
+    <div class="card-body">
+      <h2>Ayuda de la aplicación</h2>
+    </div>
+  </div>
+</p>
+
+  <p>
+  <div class="card shadow">
+    <div class="card-body">
+      <h3>Donde descargar los CSV </h3>
+
+      <p>En la página principal del curso en Moodle,
+        vaya al menú que aparece en la rueda dentada y haga clic en "Aún más" como aparece en la siguiente imagen:
+      <p>
+        <img src="/static/images/paso01.png" class="img-fluid rounded mx-auto d-block">
+      </p>
+      <p>
+        <img src="/static/images/paso02.png" class="img-fluid rounded mx-auto d-block">
+      </p>
+      <p>Siga la ruta @Informes/Registros":</p>
+      <p>
+        <img src="/static/images/paso03.png" class="img-fluid rounded mx-auto d-block">
+      </p>
+      <p>luego haga clic en "Conseguir estos registros" y descargue los registros como CSV:</p>
+      <p>
+        <img src="/static/images/paso04.png" class="img-fluid rounded mx-auto d-block">
+      </p>
+
+      <p>Este fichero .csv lo puede subir en este <a href="{% url 'data_analysis' %}">sitio</a> para su análisis.</p>
+    </div>
+  </div>
+</p>
+</div>
+
+
+{% endblock %}

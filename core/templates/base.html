@@ -1,0 +1,93 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/static/images/favicon.ico" />
+
+  <!-- Bootstrap CSS -->
+  <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+
+
+
+  <title>Moodle Offline Analytics | {% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+  {% include 'navbar.html' %}
+
+  {% block 2navbar %}
+  {% endblock 2navbar %}
+
+
+  {% block content %}
+  {% endblock content %}
+
+
+  <!-- Footer -->
+  <footer class="text-center text-white" style="background-color: #0a4275;">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: CTA -->
+      <section class="">
+        <p class="d-flex justify-content-center align-items-center">
+          <span class="me-3">Regístrate gratis!</span>
+          <a class="btn btn-outline-light btn-rounded" href="{% url 'register' %}" role="button">
+            Regístrate!</a>
+        </p>
+      </section>
+      <!-- Section: CTA -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2020 Copyright:
+      <a class="text-white" href="https://gitema.ucf.edu.cu/">GITEMA</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+
+
+  <!-- <script src="{% static 'popper.min.js' %}"></script> -->
+  <!-- Bootstrap js -->
+  <script src="{% static 'bootstrap.min.js'  %}"></script>
+  <script src="{% static 'bootstrap.bundle.min.js'  %}"></script>
+
+  <!-- jquery -->
+  <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+
+  <!--  Flatpickr  -->
+  <script src="{% static 'flatpickr.min.4.6.9.js' %}"></script>
+  <script>
+    $("#basicDate").flatpickr({
+      dateFormat: "Y-m-d"
+    });
+    $("#basicDate2").flatpickr({
+      dateFormat: "Y-m-d"
+    });
+
+  </script>
+
+  <script>
+    $("input[type='file']").on("change", function () {
+      if (this.files[0].size > 50000000) {
+        alert("Por favor suba un fichero menor de 10MB. Gracias!!");
+        $(this).val(null);
+      }
+      var filename = $(this).val();
+      var fileExtension = ['xlsx', 'xls', 'csv'];
+      if ($.inArray(filename.split('.').pop().toLowerCase(), fileExtension) == -1) {
+        alert("Solo se pueden subir ficheros de tipo '.csv'");
+        $(this).val(null);
+      }
+    });
+  </script>
+
+</body>
+
+</html>

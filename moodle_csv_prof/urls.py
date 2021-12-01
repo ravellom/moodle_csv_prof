@@ -15,19 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-import reviews.views
+import core.views, prof.views, direct.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', reviews.views.login_view, name='login'), 
-    path('logout/', reviews.views.logout_view, name='logout'),
-    path('register/', reviews.views.register, name='register'), 
+    # Aplicación core
+    path('login/', core.views.login_view, name='login'), 
+    path('logout/', core.views.logout_view, name='logout'),
+    path('register/', core.views.register, name='register'), 
+    path('', core.views.index, name='index'),
+    path('help/', core.views.help, name='help'),
+    # Aplicación prof
+    path('data_analysis/', prof.views.data_analysis, name='data_analysis'),
+    path('general/', prof.views.general_analysis, name='general_analysis'),
+    path('participants/', prof.views.part_analysis, name='part_analysis'),
+    # Aplicación direct
+    path('data_analysis_direct/', direct.views.data_analysis_direct, name='data_analysis_direct'),
+    path('general_direct/', direct.views.general_analysis_direct, name='general_analysis_direct'),
+    path('participants_direct/', direct.views.part_analysis_direct, name='part_analysis_direct'),
+    path('cursos_direct/', direct.views.cursos_direct, name='cursos_direct')
+
     #path('accounts/', include('django.contrib.auth.urls')),
-    path('', reviews.views.index, name='index'),
-    path('data_analysis/', reviews.views.data_analysis, name='data_analysis'),
-    path('general/', reviews.views.general_analysis, name='general_analysis'),
-    path('participants/', reviews.views.part_analysis, name='part_analysis'),
-    path('cluster/', reviews.views.act_analysis, name='cluster'),
-    path('help/', reviews.views.help, name='help')
-   #url('data_analysis/', views.data_analysis, name='data_analysis'),
 ]

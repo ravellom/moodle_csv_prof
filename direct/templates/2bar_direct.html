@@ -1,0 +1,18 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #F8EDED;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Modo Directivo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="{% url 'data_analysis_direct' %}">Cargar datos</a>
+        <a class="nav-link" href="{% url 'general_analysis_direct' %}">General</a>
+        <a class="nav-link" href="{% url 'part_analysis_direct' %}">Participantes</a>
+        <a class="nav-link" href="{% url 'cursos_direct' %}">Cursos</a>
+      </div>
+    </div>
+  </div>
+</nav>
+

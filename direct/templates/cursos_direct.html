@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block 2navbar %}
+{% include '2bar_direct.html' %}
+{% endblock 2navbar %}
+
+{% block content %}
+
+<div class="container body-content">
+  <p>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2>Análisis de cursos</h2>
+          <p>Cursos existentes en el reporte subido</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="card text-white bg-primary mb-3 shadow">
+        <div class="card-body">
+          <h1 class="card-title">{{ cant_cursos }}</h1>
+          <p class="card-text">Tareas subidas</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="card text-white bg-warning mb-3 shadow">
+        <div class="card-body">
+          <h1 class="card-title">{{ cant_part }}</h1>
+          <p class="card-text">Participantes</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="card text-white bg-success mb-3 shadow">
+        <div class="card-body">
+          <h1 class="card-title">{{ active_participation }}</h1>
+          <p class="card-text">Contribuciones</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </p>
+  {% if result_present %}
+
+  
+    <p>
+      <div class="container body-content shadow">
+        <div class="card-body">
+        <strong>Top 10 Cursos:</strong>
+        {{ div1|safe }}
+      </div>
+    </div>
+    </p>
+
+
+    <div class="container body-content shadow">
+      <div class="card-body">
+      <p><strong>Lista de cursos:</strong></p>
+      <div class="table-responsive">
+        {{ df|safe }}
+      </div>
+    </div>
+    </div>
+
+    <p>
+
+      <!-- <div class="card shadow">
+        <div class="card-body">
+          <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown link
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              {% for user in users_list %}
+              <li><a class="dropdown-item" href="#">{{ user }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+
+        </div>
+      </div> -->
+    </p>
+
+  </div>
+  <script src="{% static 'plotly-latest.min.js' %}"></script>
+  {% else %}
+  <div class="alert alert-danger" role="alert">
+    <strong>Atención!</strong> No ha subido ningún reporte!
+  </div>
+
+  {% endif %}
+
+
+  {% endblock %}
