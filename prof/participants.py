@@ -8,16 +8,7 @@ from core import my_globals
 import moodle_data.data
 
 def plot_part_act2(df):
-        #df2 = df[df.Component.isin(["Foro", "Tarea", "Glosario","Cuestionario", "URL"])]
-        df2 = df[df.Context.str.startswith(("Foro","Tarea","Glosario","Cuestionario", "URL"))]     
-        df3 = ( df2[['Context','Name']]
-                .value_counts()
-                .reset_index() 
-                .rename(columns={'index': 'Contexto', 0:'N'}) )
-        df4 = ( df3[['Context']]
-                .value_counts()
-                .reset_index() 
-                .rename(columns={'Context': 'Contexto', 0:'N'}).sort_values(by='N') )
+        df4 = moodle_data.data.get_part_x_act(df)
         # start stop and step variables
         start, stop, step = 0, 43, 1
         df4["Context_br"] = df4.Contexto.str.slice(start, stop, step)

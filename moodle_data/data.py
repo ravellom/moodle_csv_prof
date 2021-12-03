@@ -168,23 +168,35 @@ def participants_per_resource(self) -> pd.DataFrame:
 
 
 def merge_part_df(df):
+
     user_acc = get_part_access(df)
     tareas = df[df.Event == "Se ha enviado una entrega"][['Name']].value_counts().reset_index().rename(
         columns={'Name': 'Usuario', 0: 'N'})
-    foro_part = ["Algún contenido ha sido publicado.",
-                 "Tema creado", "Mensaje creado", "Mensaje actualizado"]
-    foros = df[df.Event.isin(foro_part)][['Name']].value_counts().reset_index().rename(
+    foros = df[df.Event.isin(ACTIVE_PART_FORO)][['Name']].value_counts().reset_index().rename(
         columns={'Name': 'Usuario', 0: 'N'})
+    cuestionarios = df[df.Event.isin(CUESTIONARIO_PART)][['Name']].value_counts().reset_index().rename(
+        columns={'Name': 'Usuario', 0: 'N'})
+    glosario = df[df.Event.isin(GLOSARY_PART)][['Name']].value_counts().reset_index().rename(
+        columns={'Name': 'Usuario', 0: 'N'})
+
     user_full = user_acc.merge(tareas, how='left', on='Usuario').rename(
         columns={'N': 'Tareas subidas'})
     user_full = user_full.merge(foros, how='left', on='Usuario').rename(
         columns={'N': 'Participación en foros'})
+    user_full = user_full.merge(cuestionarios, how='left', on='Usuario').rename(
+        columns={'N': 'Cuestionarios completados'})
+    user_full = user_full.merge(glosario, how='left', on='Usuario').rename(
+        columns={'N': 'Contribuciones al glosario'})
+
     user_full['Tareas subidas'] = user_full['Tareas subidas'].fillna(0)
     user_full['Tareas subidas'] = user_full['Tareas subidas'].astype(int)
-    user_full['Participación en foros'] = user_full['Participación en foros'].fillna(
-        0)
-    user_full['Participación en foros'] = user_full['Participación en foros'].astype(
-        int)
+    user_full['Participación en foros'] = user_full['Participación en foros'].fillna(0)
+    user_full['Participación en foros'] = user_full['Participación en foros'].astype(int)
+    user_full['Cuestionarios completados'] = user_full['Cuestionarios completados'].fillna(0)
+    user_full['Cuestionarios completados'] = user_full['Cuestionarios completados'].astype(int)
+    user_full['Contribuciones al glosario'] = user_full['Contribuciones al glosario'].fillna(0)
+    user_full['Contribuciones al glosario'] = user_full['Contribuciones al glosario'].astype(int)
+
     return user_full
 
 def merge_course_df(df):
@@ -223,10 +235,12 @@ def merge_course_df(df):
     return cursos_full
 
 def create_df_cluster(user_full):
+    used_fields = ['Accesos', 'Tareas subidas', 'Participación en foros', \
+                    'Cuestionarios completados','Contribuciones al glosario']
     user_full_km = cluster.kmeans_func(
-        user_full[['Accesos', 'Tareas subidas', 'Participación en foros']])
+        user_full[used_fields])
     user_pca = cluster.pca_func(
-        user_full_km[['Accesos', 'Tareas subidas', 'Participación en foros']])
+        user_full_km[used_fields])
     user_pca = pd.DataFrame(user_pca, columns=('pca1', 'pca2'))
     user_pca = user_pca.join(user_full_km)
     user_pca = user_pca.join(user_full['Usuario'])
@@ -311,6 +325,17 @@ def get_user_list(df):
     users = sorted(df.Name.unique())
     return users
 
+def get_part_x_act(df):
+    df2 = df[df.Context.str.startswith(("Foro","Tarea","Glosario","Cuestionario", "URL"))]     
+    df3 = ( df2[['Context','Name']]
+            .value_counts()
+            .reset_index() 
+            .rename(columns={'index': 'Contexto', 0:'N'}) )
+    df4 = ( df3[['Context']]
+            .value_counts()
+            .reset_index() 
+            .rename(columns={'Context': 'Contexto', 0:'N'}).sort_values(by='N') )
+    return df4
 
 def get_act_acc(df):
     #df2 = df[df.Component.isin(["Foro", "Tarea", "Glosario","Cuestionario", "URL"])]
