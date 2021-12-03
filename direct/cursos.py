@@ -8,7 +8,7 @@ from core import my_globals
 import moodle_data.data
 
 def plot_top10_cursos_access(df):
-        df_cursos = moodle_data.data.get_course_list_access(df)
+        df_cursos = moodle_data.data.get_course_top10_access(df)
         fig = px.line(df_cursos, x="Fecha", y="N", color="Curso")# ver 5 de plotly: markers=True
         fig.update_layout(showlegend=True)
         fig.update_layout(my_globals.BASE_LAYOUT)    

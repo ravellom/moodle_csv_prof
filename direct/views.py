@@ -62,10 +62,12 @@ def data_analysis_direct(request):
     # No está creado el df
     if df_name not in my_globals.DfC.keys(): 
         request.session['mode'] = "direct"
-        if request.method == 'POST' and 'myfile1' in request.FILES:
-            myfile1 = request.FILES['myfile1']
+        if request.method == 'POST' and 'myfile1[]' in request.FILES:
+            myfile1 = request.FILES.getlist("myfile1[]")
+            #request.FILES['myfile1']
             #try:
-            my_globals.DfC[df_name] = moodle_data.data.data_upload(myfile1)
+            #my_globals.DfC[df_name] = moodle_data.data.data_upload(myfile1)
+            my_globals.DfC[df_name] = moodle_data.data.df_from_multiple_file(myfile1)
             # if 'myfile2' in request.FILES:
             #     myfile2 = request.FILES['myfile2']
             #     my_globals.DfC[df_name] = moodle_backup.add_section_column(my_globals.DfC[df_name], myfile2)
@@ -149,10 +151,10 @@ def cursos_direct(request):
         # ### Gráfico de cantidad de accesos de los top10 cursos
         div1 = cursos.plot_top10_cursos_access(my_globals.DfC[dff_name])
         # ### Agrupar usuariosmy_g
-        df_course_list = moodle_data.data.get_course_list(my_globals.DfC[dff_name])
+        df_course_list = moodle_data.data.merge_course_df(my_globals.DfC[dff_name])
         # users_list = moodle_data.data.get_user_list(my_globals.DfC[dff_name])
-        # cant_part = moodle_data.data.get_num_participants(my_globals.DfC[dff_name])
-        # active_participation = moodle_data.data.get_num_active_participation(my_globals.DfC[dff_name])
+        cant_part = moodle_data.data.get_num_participants(my_globals.DfC[dff_name])
+        active_participation = moodle_data.data.get_num_active_participation(my_globals.DfC[dff_name])
         # #cant_sesiones = data.get_num_session(my_globals.DfC[dff_name])
         # cant_tareas_subidas = moodle_data.data.get_num_upload_assignments(my_globals.DfC[dff_name])
         ### Convertir df a html con pandas
@@ -160,6 +162,6 @@ def cursos_direct(request):
         df_course_list_html = df_course_list.to_html(classes="table table-striped table-sm", border=0, justify="left")
         return render(request, 'cursos_direct.html',
                 {'result_present': True,
-                'df': df_course_list_html, 'div1':div1,
-                'cant_cursos': cant_cursos})
+                'df': df_course_list_html, 'div1':div1, 'cant_part':cant_part,
+                'cant_cursos': cant_cursos, 'active_participation':active_participation})
     return render(request,'cursos_direct.html', {'result_present': False})

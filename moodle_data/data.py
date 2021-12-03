@@ -6,6 +6,7 @@ import pandas as pd
 #from . import my_globals
 from django.conf import settings
 import os
+#from glob import iglob
 import IP2Location
 from . import moodle_backup, cluster
 
@@ -23,8 +24,10 @@ ACTIVE_PART = [
     "Se ha subido una entrega", "Entrega creada", "Entrega actualizada",
     # Cuestionario
     "Intento enviado",
-    # Comentarios
+    # Glosario y Comentarios
     "Comentario creado",
+    # Glosario
+    "La entrada ha sido creada", "La entrada ha sido actualizada"
     # Chat
     "Mensaje enviado",
     # Módulo de encuesta
@@ -34,6 +37,12 @@ ACTIVE_PART_FORO = [
     "Algún contenido ha sido publicado.", "Tema creado", "Mensaje creado", "Mensaje actualizado"]
 
 COMPLETED_ASSIGMENT = "Se ha enviado una entrega"
+
+GLOSARY_PART = [    
+    # Glosario
+    "Comentario creado", "La entrada ha sido creada", "La entrada ha sido actualizada"]
+
+CUESTIONARIO_PART = ["Intento enviado"]
 
 # ·········
 
@@ -52,6 +61,16 @@ def data_upload(file):
     #df = moodle_backup.course_structure(df, backup_file)
     return df
 
+def df_from_multiple_file(files):
+    df = pd.DataFrame()
+    for f in files:
+        dfaux = data_upload(f)
+        #pos1 = f.find("\\")
+        pos2 = str(f.name).find(".csv")
+        nombre_curso = str(f.name)[0:pos2]
+        dfaux["Curso"] = nombre_curso
+        df = pd.concat([df,dfaux], ignore_index=True)
+    return df
 
 def change_columns_name(df):
     df = df.rename(columns={
@@ -168,6 +187,40 @@ def merge_part_df(df):
         int)
     return user_full
 
+def merge_course_df(df):
+
+    courses_acc = get_course_list(df)
+
+    df_users_cursos = df[['Curso','Name']].value_counts().reset_index().rename(
+            columns={'index': 'Curso', 'Context':'N'})
+    df_users_cursos2 = df_users_cursos['Curso'].value_counts().reset_index().rename(
+            columns={'index': 'Curso', 'Curso':'N'})
+
+    foros_cant = df[df['Context'].str.contains(r'^Foro')][['Curso','Context']]. \
+                    value_counts().reset_index().rename(columns={'index': 'Context', 0:'N'})
+    foros_cant = foros_cant['Curso'].value_counts().reset_index(). \
+                    rename(columns={'index': 'Curso', 'Curso':'N'})
+
+    foros_parti = df[(df['Event'] == 'Mensaje creado')|(df['Event'] == 'Algún contenido ha sido publicado.')] 
+    foros_participacion = foros_parti[foros_parti['Context']. \
+                            str.contains(r'^Foro')][['Curso']].value_counts(). \
+                            reset_index().rename(columns={'index': 'Context', 0:'N'})
+
+    tarea = df[(df['Event'] == 'Se ha enviado una entrega')|(df['Event'] == 'Se ha entregado una extensión')]
+    tarea2 = tarea['Curso'].value_counts().reset_index().rename(columns={'index':'Curso','Curso':'N'})
+
+    cursos_full = pd.DataFrame
+    cursos_full = df_users_cursos2.merge(courses_acc, how='left', on='Curso').rename(
+            columns={'N':'Participantes'})
+    cursos_full = cursos_full.merge(foros_participacion, how='left', on='Curso').rename(
+            columns={'N': 'Participación en foros'})
+    cursos_full = cursos_full.merge(tarea2, how='left', on='Curso').rename(
+             columns={'N': 'Tareas subidas'})
+
+    cursos_full['Tareas subidas'] = cursos_full['Tareas subidas'].fillna(0)
+    cursos_full['Tareas subidas'] = cursos_full['Tareas subidas'].astype(int)
+
+    return cursos_full
 
 def create_df_cluster(user_full):
     user_full_km = cluster.kmeans_func(
@@ -192,26 +245,24 @@ def get_course_total_access(df):
 
 
 def get_course_num(df) -> int:
-    cadena = "Curso:"
-    num_cursos = df['Context'].loc[df['Context'].str.contains(
-        r'^' + cadena)].value_counts()
+    #cadena = "Curso:"
+    num_cursos = df['Curso'].value_counts()
     return len(num_cursos)
 
 
 def get_course_list(df):
-    cadena = "Curso:"
-    df_cursos = df['Context'].loc[df['Context'].str.contains(r'^' + cadena)]. \
-                value_counts().reset_index().rename(columns={'index': 'Curso', 'Context': 'Accesos'})
+    #cadena = "Curso:"
+    df_cursos = df['Curso']. \
+                value_counts().reset_index().rename(columns={'index': 'Curso', 'Curso': 'Accesos'})
     return df_cursos
 
-def get_course_list_access(df):
-    cadena = "Curso:"
-    df_cursos = df['Context'].loc[df['Context']. \
-                    str.contains(r'^' + cadena)].value_counts().reset_index(). \
-                    rename(columns={'index':'Curso', 'Context':'N'})
-    df_contexto = df[['date', 'Context']].loc[df['Context']. \
-                str.contains(r'^' + cadena)].value_counts().reset_index(). \
-                rename(columns={'date': 'Fecha', 'Context': 'Curso', 0: 'N'}).sort_values(by='Fecha')
+def get_course_top10_access(df):
+    #cadena = "Curso:"
+    df_cursos = df['Curso']. \
+                    value_counts().reset_index(). \
+                    rename(columns={'index':'Curso', 'Curso':'N'})
+    df_contexto = df[['date', 'Curso']].value_counts().reset_index(). \
+                rename(columns={'date': 'Fecha', 'Curso': 'Curso', 0: 'N'}).sort_values(by='Fecha')
     cursos = df_cursos['Curso'].head(10)
     df_contexto = df_contexto[(df_contexto.Curso.isin(cursos))]
     return df_contexto
