@@ -4,17 +4,17 @@
 
 {% if not request.user.is_authenticated %}
 
-  {% block 2navbar %}
+{% block 2navbar %}
 
-    {% if request.session.mode == "prof" %}
-        {% include '2bar_prof.html' %}      
-    {% endif %}
+{% if request.session.mode == "prof" %}
+{% include '2bar_prof.html' %}
+{% endif %}
 
-    {% if request.session.mode == "direct" %}
-        {% include '2bar_direct.html' %}
-    {% endif %}
-    
-  {% endblock 2navbar %}
+{% if request.session.mode == "direct" %}
+{% include '2bar_direct.html' %}
+{% endif %}
+
+{% endblock 2navbar %}
 
 {% endif %}
 
@@ -27,12 +27,68 @@
       <h2>Ayuda de la aplicación</h2>
     </div>
   </div>
-</p>
+  </p>
 
   <p>
   <div class="card shadow">
     <div class="card-body">
-      <h3>Donde descargar los CSV </h3>
+      <h3>Contenido </h3>
+      <ul>
+        <li>
+          <a>Modo Profesor</a>
+        </li>
+        <li>
+          <a>Modo Directivo</a>
+        </li>
+        <li>
+          <a>Dónde descargar los CSV</a>
+        </li>
+
+      </ul>
+      <hr>
+      <h3>Modo Profesor</h3>
+      <p>
+        El modo profesor está destinado al análisis de los registros de un solo curso. <br>
+        En la vista de subida de datos debe proveer un fichero tipo .csv, que descargue de su curso, como se explica en
+        el apartado “Dónde descargar los CSV”. En esta propia página puede excluir los usuarios que no tenga interés que
+        aparezca en el análisis. Además, puede filtrar los datos por periodo de tiempo, seleccionando la fecha de inicio
+        y de fin.<br>
+        En la vista “General” aparecerán 5 análisis, basados en los accesos de los participantes (puede excluir
+        participantes que no sean de interés) un acceso se considera un click en algún enlace del curso (recurso,
+        actividad, información, etc.).<br>
+        En la vista “Participantes” puede encontrar análisis como número de participantes matriculados en el curso, así
+        como la cantidad de participantes que han accedida a las 10 actividades más visitadas.<br>
+        También, aparece un análisis de cluster donde se tienen en cuenta las variables que aparecen en la tabla de
+        participantes, ejemplo: cantidad de accesos, mensajes en los foros, cuestionarios completados, etc. Este
+        análisis puede ayudar al profesor a identificar grupos de usuarios con comportamientos similares en el uso de
+        los recursos que el profesor provee en la plataforma.
+
+      </p>
+
+      <hr>
+      <h3>Modo Directivo</h3>
+      <p>
+        El modo directivo está destinado al análisis de los registros de varios cursos.<br>
+        En la vista de subida de datos debe proveer varios ficheros .csv, que descargue de los cursos de interés, como
+        se explica en el apartado “Dónde descargar los CSV”.<br>
+        Es importante que cambie los nombres de los ficheros .csv con los nombres de los cursos pues este nombre es el
+        que aparecerá en el análisis, preferiblemente use una abreviatura del nombre, ejemplo:<br>
+        Fichero descargado del curso “Fundamentos de X en el siglo XXI”: logs_inf.mo_20211130-0918.csv<br>
+        Cambiar a: Fundamentos_X_SXXI.csv o FundX_SXXI.csv<br>
+        Al igual que en el modo profesor en la propia página de subida de datos puede excluir los usuarios que no tenga
+        interés que aparezca en el análisis. Además, puede filtrar los datos por periodo de tiempo, seleccionando la
+        fecha de inicio y de fin.<br>
+        El modo directivo comparte los análisis “General” y “Participantes” de la vista profesor, solo que basados en
+        los cursos subidos.<br>
+        A estos análisis se suma una vista “Cursos” donde se brida un análisis por curso, primeramente, un gráfico de
+        línea con los accesos diarios a los 10 cursos más accedidos. A continuación, se muestra una tabla con una serie
+        de indicadores que pueden ayudar al directivo a analizar el uso y la interactividad que ha tenido cada curso.
+
+
+      </p>
+      <hr>
+
+      <h3>Dónde descargar los CSV </h3>
 
       <p>En la página principal del curso en Moodle,
         vaya al menú que aparece en la rueda dentada y haga clic en "Aún más" como aparece en la siguiente imagen:
@@ -54,7 +110,7 @@
       <p>Este fichero .csv lo puede subir en este <a href="{% url 'data_analysis' %}">sitio</a> para su análisis.</p>
     </div>
   </div>
-</p>
+  </p>
 </div>
 
 
