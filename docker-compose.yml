@@ -5,7 +5,7 @@ services:
     build: .
     restart: always
     ports:
-      - 8000:8000
+      - 29000:29000
     environment:
       - DEBUG=${DEBUG}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
@@ -13,9 +13,21 @@ services:
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
       - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
-      - DEPLOY=0
     volumes:
-      - static-data:/app/staticfiles
+      - static-data:/static
+      - moodle-local-db:/etc/data
+
+  server:
+    build: ./server
+    restart: always
+    volumes:
+      - static-data:/static
+    ports:
+      - 443:443
+      - 80:80
+    depends_on:
+      - app
 
 volumes:
   static-data:
+  moodle-local-db:

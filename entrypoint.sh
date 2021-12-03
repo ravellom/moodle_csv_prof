@@ -14,9 +14,4 @@ python manage.py collectstatic --noinput
 
 # Start the server
 echo "Starting the server..."
-if [ $DEPLOY = "0" ]
-then
-    python manage.py runserver 0.0.0.0:8000
-else
-    uwsgi --socket :29000 --module moodle_csv_prof.wsgi --master --enable-threads --uid=505 --gid=505
-fi
+uwsgi --socket :29000 --module moodle_csv_prof.wsgi --master --enable-threads

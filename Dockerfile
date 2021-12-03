@@ -1,18 +1,25 @@
 FROM python:3.9
 
-# Install build dependencies
 RUN apt update && apt upgrade
 
 WORKDIR /app
 
-COPY requirements.txt ./
+# Make staticfiles dir
+RUN mkdir /static
 
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+# Make sqlite database location
+RUN mkdir /etc/data
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY requirements.txt .
+RUN pip install --no-cache-dir wheel && \
+    pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 COPY . .
+
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 29000
 
 CMD [ "/entrypoint.sh" ]
