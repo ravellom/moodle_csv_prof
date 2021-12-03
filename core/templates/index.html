@@ -3,7 +3,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% if not request.user.is_authenticated %}
+{% if request.user.is_authenticated %}
 
   {% block 2navbar %}
 
