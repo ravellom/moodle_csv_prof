@@ -25,6 +25,8 @@ urlpatterns = [
     path('register/', core.views.register, name='register'), 
     path('', core.views.index, name='index'),
     path('help/', core.views.help, name='help'),
+    path('update/', core.views.update, name='update'),
+    path('del_global_df/', core.views.del_global_df, name='del_global_df'),
     # Aplicación prof
     path('data_analysis/', prof.views.data_analysis, name='data_analysis'),
     path('general/', prof.views.general_analysis, name='general_analysis'),

@@ -17,6 +17,16 @@ import pandas as pd
 from . import my_globals
 from .forms import NewUserForm
 import moodle_data.data
+import subprocess
+
+####### run shel para actuaizar aplicación  -------------- 
+
+def update(request):
+    if request.user.is_superuser:
+        subprocess.call('/update_app.sh')
+    else:
+        error_message = 'No eres admin para ejecutar el script!'
+    return render(request,'update.html',{})
 
 ####### login infrastructure  -------------- 
 def logout_view(request):
@@ -95,3 +105,12 @@ def index(request):
 def help(request):
     return render(request, 'help.html')
 
+#### Destruir dataframes del dicionario global por petición del usuario -------------------------------
+def del_global_df(request):
+    df_name =  request.session.session_key + "_df"
+    dff_name = request.session.session_key + "_dff"
+    new_df = bool(request.GET.get("new_df", False))
+    if new_df:
+        my_globals.DfC.pop(df_name)
+        my_globals.DfC.pop(dff_name)
+    return render(request, 'index.html')

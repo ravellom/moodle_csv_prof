@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% if request.user.is_authenticated %}
+
+  {% block 2navbar %}
+
+    {% if request.session.mode == "prof" %}
+        {% include '2bar_prof.html' %}      
+    {% endif %}
+
+    {% if request.session.mode == "direct" %}
+        {% include '2bar_direct.html' %}
+    {% endif %}
+    
+  {% endblock 2navbar %}
+
+{% endif %}
+
+{% block content %}
+
+{% if user.is_superuser %}
+    <p>Hello, admin.</p>
+{% else %}
+    <p>Hello, ordinary visitor.</p>
+{% endif %}
+
+
+{% endblock %}
