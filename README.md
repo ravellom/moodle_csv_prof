@@ -1,6 +1,10 @@
 # Offline Moodle Analytics
 ### Analíticas de aprendizaje a partir de informes de un curso en Moodle
 Este proyecto está en desarrollo y abierto a colaboración
+
+## Versiones disponibles
+Para usuarios del Ministerio de Edu. Superior de Cuba: https://moodlestats.ucf.edu.cu
+Versión en Heroku: https://moodle-py.herokuapp.com/ (Versión con limitantes impuestas por Heroku)
    
 ## Donde descargar los CSV
     
