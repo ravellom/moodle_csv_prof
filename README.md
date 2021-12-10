@@ -3,7 +3,7 @@
 Este proyecto está en desarrollo y abierto a colaboración
 
 ## Versiones disponibles
-Para usuarios del Ministerio de Edu. Superior de Cuba: https://moodlestats.ucf.edu.cu
+Para usuarios del Ministerio de Edu. Superior de Cuba: http://moodlestats.ucf.edu.cu/ <br>
 Versión en Heroku: https://moodle-py.herokuapp.com/ (Versión con limitantes impuestas por Heroku)
    
 ## Donde descargar los CSV
