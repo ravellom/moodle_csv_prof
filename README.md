@@ -1,5 +1,5 @@
 # Offline Moodle Analytics
-### Learning analytics from course reports in Moodle
+### Learning analytics from course logs in Moodle
 This project is under development and open for collaboration
 
 ## Available versions
