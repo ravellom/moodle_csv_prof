@@ -69,6 +69,7 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful." )
+            request.session['mode'] = "prof"
             return redirect("index")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()
