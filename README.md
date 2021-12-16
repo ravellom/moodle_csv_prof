@@ -1,33 +1,22 @@
 # Offline Moodle Analytics
-### Analíticas de aprendizaje a partir de informes de un curso en Moodle
-Este proyecto está en desarrollo y abierto a colaboración
+### Learning analytics from course reports in Moodle
+This project is under development and open for collaboration
 
-## Versiones disponibles
-Para usuarios del Ministerio de Edu. Superior de Cuba: http://moodlestats.ucf.edu.cu/ <br>
-Versión en Heroku: https://moodle-py.herokuapp.com/ (Versión con limitantes impuestas por Heroku)
+## Available versions
+For users of the Ministry of Edu. Superior of Cuba: http://moodlestats.ucf.edu.cu/
+Heroku version: https://moodle-py.herokuapp.com/ (Version with limitations imposed by Heroku)
+
    
-## Donde descargar los CSV
-    
-En la página principal del curso en Moodle, vaya al menú
-que aparece en la rueda dentada y siga la ruta &quot;Aún más/Informes/Registros&quot;,
-luego haga clic en &quot;Conseguir estos registros&quot; y descarguelos como CSV.
-Este fichero .csv lo puede subir en este sitio para su análisis.</p>
+## Where to download the CSV logs
+On the main page of the course in Moodle, go to the menu that appears on the cogwheel and follow the path "Even more / Reports / Logs", then click "Get these logs" and download them as CSV. This .csv file can be uploaded to this site for analysis.
+   
+### Application developed by:
+Dr. Raidell Avello Martínez. Associate Professor, Department of Educational Technology and Information Technology. Coordinator of the Research Group on Emergent Technologies for Learning (GITEMA) https://gitema.ucf.edu.cu/ University of Cienfuegos, Cuba.
 
-## Objetivo
-    
-El objetivo de este proyecto es crear algoritmos,
-aplicaciones Web y otros servicios en Python para analizar informes de Moodle
-(CSV) tanto generales como de actividades como foros de discusión, de manera
-que un profesor que imparta un curso en Moodle y desee hacer análisis de su
-curso, independientemente de si el servidor tenga plugins instalados para esta
-función, pueda hacerlo utilizando los recursos libres que en este proyecto se
-brindan.
-Se aceptan sugerencias y colaboración para su desarrollo
-    
-### Aplicación desarrollada por:
-Dr. Raidell Avello Martínez, Profesor Titular, Dpto. de Tecnología Educativa e Informática.
-Coordinador del Grupo de Investigación sobre Tecnologías EMergentes para el Aprendizaje (GITEM@) https://gitema.ucf.edu.cu/
-Universidad de Cienfuegos, Cuba.
-### Colaboradores:</h4>
-Lic. Marcos Carrera Ramos
-Licenciado en Ciencia de la Computación. Profesor Adiestrado en la Universidad de Cienfuegos, Cuba.
+### Collaborators:
+Lic. Marcos Carrera Ramos. Graduated in Computer Science. Trained Professor at the University of Cienfuegos, Cuba.
+
+### References
+
+ - DISPONIBLE VERSIÓN 1 DE OFFLINE MOODLE ANALYTICS. https://gitema.ucf.edu.cu/?p=593
+
