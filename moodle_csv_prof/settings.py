@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(environ.get("DEBUG", 1)))
+DEBUG = bool(int(environ.get("DEBUG", 0)))
 
 ALLOWED_HOSTS = environ.get("ALLOWED_HOSTS", "").split(",")[1:]
 
