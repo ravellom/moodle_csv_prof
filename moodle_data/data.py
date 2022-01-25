@@ -80,6 +80,7 @@ def change_columns_name(df):
         'Contexto del evento': 'Context',
         'Componente': 'Component',
         'Nombre evento': 'Event',
+        'Nombre del evento': 'Event', # para otros formato
         'Descripción': 'Description',
         'Origen': 'Origen',
         'Dirección IP': 'IP',
@@ -89,8 +90,12 @@ def change_columns_name(df):
 
 def add_mont_day_hour_columns(df):
     # extraer fecha
-    df['datefull'] = pd.to_datetime(
-        df['DT'], format="%d/%m/%Y %H:%M", dayfirst=True)
+    try:
+        df['datefull'] = pd.to_datetime(
+            df['DT'], format="%d/%m/%Y %H:%M", dayfirst=True)
+    except:
+        df['datefull'] = pd.to_datetime(
+            df['DT'], dayfirst=True)
     # Date
     df['date'] = df['datefull'].dt.date
     df['year'] = df['datefull'].dt.year
