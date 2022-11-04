@@ -3,7 +3,7 @@
 This project is under development and open for collaboration
 
 ## Available versions
-For users of the Ministry of Higher Education of Cuba: http://moodlestats.ucf.edu.cu/
+For users from the Ministry of Higher Education of Cuba: http://moodlestats.ucf.edu.cu/
 Heroku version: https://moodle-py.herokuapp.com/ (Version with limitations imposed by Heroku)
 
    
