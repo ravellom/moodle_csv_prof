@@ -14,4 +14,5 @@ python manage.py collectstatic --noinput
 
 # Start the server
 echo "Starting the server..."
-uwsgi --socket :29000 --module moodle_csv_prof.wsgi --master --enable-threads
+# uwsgi --socket :29000 --module moodle_csv_prof.wsgi --master --enable-threads
+gunicorn moodle_csv_prof.wsgi
