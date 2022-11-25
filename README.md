@@ -1,5 +1,5 @@
 # Offline Moodle Analytics
-### Learning analytics of course logs in Moodle (Analíticas de aprendizaje a partor de los registros de Moodle)
+### Learning analytics of course logs in Moodle (Analíticas de aprendizaje a partir de los registros de Moodle)
 This project is under development and open for collaboration
 
 ## Available versions
@@ -18,8 +18,8 @@ Lic. Marcos Carrera Ramos. Graduated in Computer Science. Trained Professor at t
 
 ### Donations
 Help us with a donation to continue advancing in the project. Options:
-#### https://paypal.me/CanalRecuEdu
-#### https://www.buymeacoffee.com/RaidellAvello
+- https://paypal.me/CanalRecuEdu
+- https://www.buymeacoffee.com/RaidellAvello
 
 ### References
 
