@@ -1,5 +1,5 @@
 # Offline Moodle Analytics
-### Learning analytics from course logs in Moodle
+### Learning analytics of course logs in Moodle (Analíticas de aprendizaje a partor de los registros de Moodle)
 This project is under development and open for collaboration
 
 ## Available versions
@@ -15,6 +15,11 @@ Dr. Raidell Avello Martínez. Full Professor, Department of Educational Technolo
 
 ### Collaborators:
 Lic. Marcos Carrera Ramos. Graduated in Computer Science. Trained Professor at the University of Cienfuegos, Cuba.
+
+### Donations
+Help us with a donation to continue advancing in the project. Options:
+#### https://paypal.me/CanalRecuEdu
+#### https://www.buymeacoffee.com/RaidellAvello
 
 ### References
 
