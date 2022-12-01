@@ -6,14 +6,14 @@ This project is under development and open for collaboration
 For users from the Ministry of Higher Education of Cuba: http://moodlestats.ucf.edu.cu/
 Heroku version: https://moodle-py.herokuapp.com/ (Version with limitations imposed by Heroku)
 
-### Do you want to support the project? Here are the options: 
-#### Donations
+## Do you want to support the project? Here are the options: 
+### Donations
 - https://paypal.me/CanalRecuEdu
 - https://www.buymeacoffee.com/RaidellAvello
-#### Pay hosting so that the application can be accessed by the community and with good performance.
+### Pay hosting so that the application can be accessed by the community and with good performance.
 - Heroku: https://moodle-py.herokuapp.com/
-   
-## Where to download the CSV logs
+
+### Where to download the CSV logs
 On the main page of the course in Moodle, go to the menu that appears on the cogwheel and follow the path "Even more / Reports / Logs", then click "Get these logs" and download them as CSV. This .csv file can be uploaded to this site for analysis.
    
 ### Application developed by:
