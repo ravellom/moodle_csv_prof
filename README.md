@@ -13,13 +13,16 @@ On the main page of the course in Moodle, go to the menu that appears on the cog
 ### Application developed by:
 Dr. Raidell Avello Martínez. Full Professor, Department of Educational Technology. Coordinator of the Research Group on Emergent Technologies for Learning (GITEMA) https://gitema.ucf.edu.cu/ University of Cienfuegos, Cuba.
 
-### Collaborators:
+#### Collaborators:
 Lic. Marcos Carrera Ramos. Graduated in Computer Science. Trained Professor at the University of Cienfuegos, Cuba.
 
-### Donations
+### Do you want to support the project? Here are the options: 
+#### Donations
 Help us with a donation to continue advancing in the project. Options:
 - https://paypal.me/CanalRecuEdu
 - https://www.buymeacoffee.com/RaidellAvello
+#### Pay hosting so that the application can be accessed by the community and with good performance.
+- Heroku: https://moodle-py.herokuapp.com/
 
 ### References
 
