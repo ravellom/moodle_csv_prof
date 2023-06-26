@@ -1,28 +1,31 @@
-# Offline Moodle Analytics
-### Learning analytics of course logs in Moodle (Analíticas de aprendizaje a partir de los registros de Moodle)
+# Moodle Logs Analytics
+### Learning analytics of Moodle courses logs  
 This project is under development and open for collaboration
 
-## Available versions
-For users from the Ministry of Higher Education of Cuba: http://moodlestats.ucf.edu.cu/
-Heroku version: https://moodle-py.herokuapp.com/ (Version with limitations imposed by Heroku)
+## Production instancies
+Railway: https://moodlestats.up.railway.app/ (Version with limitations imposed by Railway)
 
 ## Do you want to support the project? Here are the options: 
 ### Donations
 - https://paypal.me/CanalRecuEdu
 - https://www.buymeacoffee.com/RaidellAvello
 ### Pay hosting so that the application can be accessed by the community and with good performance.
-- Heroku: https://moodle-py.herokuapp.com/
+- Railway: https://moodlestats.up.railway.app/
+#### This app include ads trying to self support 
 
 ### Where to download the CSV logs
 On the main page of the course in Moodle, go to the menu that appears on the cogwheel and follow the path "Even more / Reports / Logs", then click "Get these logs" and download them as CSV. This .csv file can be uploaded to this site for analysis.
    
 ### Application developed by:
-Dr. Raidell Avello Martínez. Full Professor, Department of Educational Technology. Coordinator of the Research Group on Emergent Technologies for Learning (GITEMA) https://gitema.ucf.edu.cu/ University of Cienfuegos, Cuba.
+Dr. Raidell Avello Martínez. Full Professor, Educational Technology and Data Science. Creator of the project RecuEdu. Recursos Educativos. https://www.youtube.com/@RaidellAvello
 
 #### Collaborators:
 Lic. Marcos Carrera Ramos. Graduated in Computer Science. Trained Professor at the University of Cienfuegos, Cuba.
 
-### References
+#### Sponsors:
+University of Cienfuegos, Cuba.
+Universidad Bolivariana del Ecuador
 
- - DISPONIBLE VERSIÓN 1 DE OFFLINE MOODLE ANALYTICS. https://gitema.ucf.edu.cu/?p=593
+### References
+ - Moodle Offline Analytics: a web application to monitor student activity. https://red.hypotheses.org/2187
 
