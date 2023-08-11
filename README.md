@@ -3,7 +3,7 @@
 This project is under development and open for collaboration
 
 ## Production instancies
-Railway: https://moodlestats.up.railway.app/ (Version with limitations imposed by Railway)
+Railway: https://moodle.up.railway.app (Thanks to Universidad Bolivariana del Ecuador)
 
 ## Do you want to support the project? Here are the options: 
 ### Donations
