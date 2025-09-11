@@ -6,12 +6,7 @@ This project is under development and open for collaboration
 Railway: https://moodle.up.railway.app (Thanks to Universidad Bolivariana del Ecuador)
 
 ## Do you want to support the project? Here are the options: 
-### Donations
-- https://paypal.me/CanalRecuEdu
-- https://www.buymeacoffee.com/RaidellAvello
 ### Pay hosting so that the application can be accessed by the community and with good performance.
-- Railway: https://moodlestats.up.railway.app/
-#### This app include ads trying to self support 
 
 ### Where to download the CSV logs
 On the main page of the course in Moodle, go to the menu that appears on the cogwheel and follow the path "Even more / Reports / Logs", then click "Get these logs" and download them as CSV. This .csv file can be uploaded to this site for analysis.
@@ -27,5 +22,7 @@ University of Cienfuegos, Cuba.
 Universidad Bolivariana del Ecuador
 
 ### References
- - Moodle Offline Analytics: a web application to monitor student activity. https://red.hypotheses.org/2187
+- Moodle Logs Analytics: una aplicación web libre para supervisar la actividad de los estudiantes. Universidad y Sociedad [online]. 2023, vol.15, n.4, pp. 715-721. http://scielo.sld.cu/scielo.php?script=sci_abstract&pid=S2218-36202023000400715
+- Interaction Patterns in Moodle: An analysis of five editions of an online master's course with the Moodle Logs Analytics tool. Conrado vol.20 no.97 Cienfuegos mar.-abr. 2024. http://scielo.sld.cu/scielo.php?pid=S1990-86442024000200023
+- Potential of GPT-4o in Learning Analytics: A Comparative Study with Moodle Logs Analytics. https://link.springer.com/chapter/10.1007/978-3-031-93409-4_10
 
